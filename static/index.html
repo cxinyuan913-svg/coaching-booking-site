@@ -4,6 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>教練預約網站</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700;900&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/static/css/style.css" />
 </head>
 <body>
@@ -11,14 +14,34 @@
   <main>
     <!--
       這整頁都是佔位內容（用【】標起來），還沒放教練真實的介紹跟照片。
-      等內容確定後，把下面標記的地方換成真的文字/圖片即可，版面不用動。
+      等內容確定後，把下面標記的地方換成真的文字/圖片即可，版面不用動：
+      - .hero-photo-block 裡面換成 <img src="真實照片路徑" alt="教練姓名" />
+      - .stat-number 換成真實數字
     -->
-    <section class="hero">
-      <div class="hero-avatar-placeholder">照片</div>
-      <h1>【教練姓名】</h1>
-      <p class="hero-tagline">【一句話招牌介紹，例如：陪你從零基礎打到能上場比賽】</p>
-      <a href="/book.html" class="cta-button">立即預約</a>
+    <section class="hero-sporty">
+      <div class="hero-content">
+        <p class="hero-eyebrow">【專業羽球教練】</p>
+        <h1>【教練姓名】</h1>
+        <p class="hero-tagline">【一句話招牌介紹，例如：陪你從零基礎打到能上場比賽】</p>
+        <a href="/book.html" class="cta-button cta-sporty">立即預約</a>
+      </div>
+      <div class="hero-photo-block">🏸<br />（教練照片）</div>
     </section>
+
+    <div class="stats-row">
+      <div class="stat-item">
+        <span class="stat-number">【8】</span>
+        <span class="stat-label">年教學經驗</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-number">【100+】</span>
+        <span class="stat-label">學員教過</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-number">【OO】</span>
+        <span class="stat-label">認證教練</span>
+      </div>
+    </div>
 
     <section class="section-block">
       <h2>關於教練</h2>
@@ -37,8 +60,9 @@
       </ul>
     </section>
 
-    <section class="section-block" style="text-align: center">
-      <a href="/book.html" class="cta-button">查看開放時段</a>
+    <section class="cta-banner">
+      <h2>準備好開始了嗎？</h2>
+      <a href="/book.html" class="cta-button cta-sporty">查看開放時段</a>
     </section>
   </main>
 

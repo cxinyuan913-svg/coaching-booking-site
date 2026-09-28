@@ -45,34 +45,12 @@ h1 {
   margin-bottom: 16px;
 }
 
-/* 首頁封面（教練自我介紹） */
-.hero {
-  text-align: center;
-  padding: 48px 16px 40px;
-}
-
-.hero-avatar-placeholder {
-  width: 120px;
-  height: 120px;
-  border-radius: 50%;
-  background: #dfe2ea;
-  color: #888;
-  font-size: 13px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 auto 20px;
-}
-
-.hero h1 {
-  font-size: 28px;
-  margin-bottom: 8px;
-}
-
-.hero-tagline {
-  color: #555;
-  font-size: 15px;
-  margin-bottom: 24px;
+/* 首頁封面：動感運動風（深色底 + 亮黃重點色，大字體標語 + 斜角色塊） */
+:root {
+  --sport-navy: #12172b;
+  --sport-navy-light: #1e2648;
+  --sport-accent: #f5d90a;
+  --sport-muted: #c7cbe0;
 }
 
 .cta-button {
@@ -83,16 +61,131 @@ h1 {
   padding: 12px 28px;
   border-radius: 24px;
   font-size: 15px;
-  font-weight: 600;
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
 }
 
 .cta-button:hover {
   background: #3949e0;
 }
 
+.cta-sporty {
+  background: var(--sport-accent);
+  color: var(--sport-navy);
+}
+
+.cta-sporty:hover {
+  background: #ffe94d;
+}
+
+.hero-sporty {
+  background: linear-gradient(135deg, var(--sport-navy) 0%, var(--sport-navy-light) 100%);
+  color: #fff;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+  padding: 48px 40px;
+  margin-top: 8px;
+  overflow: hidden;
+}
+
+.hero-content {
+  flex: 1;
+  min-width: 0;
+  max-width: 480px;
+}
+
+.hero-eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-size: 12px;
+  color: var(--sport-accent);
+  font-weight: 800;
+  margin: 0 0 10px;
+}
+
+.hero-sporty h1 {
+  font-size: 42px;
+  font-weight: 900;
+  margin: 0 0 12px;
+  line-height: 1.15;
+}
+
+.hero-sporty .hero-tagline {
+  font-size: 16px;
+  color: var(--sport-muted);
+  margin-bottom: 28px;
+}
+
+.hero-photo-block {
+  flex-shrink: 0;
+  width: 220px;
+  height: 260px;
+  clip-path: polygon(15% 0, 100% 0, 85% 100%, 0 100%);
+  background: linear-gradient(160deg, #2a3364, #3d4a8a);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--sport-muted);
+  font-size: 13px;
+  text-align: center;
+  line-height: 1.6;
+}
+
+.hero-photo-block img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.stats-row {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  background: var(--sport-navy);
+  color: #fff;
+  padding: 24px 16px;
+  margin: 20px 0 28px;
+  border-radius: 12px;
+  gap: 16px;
+}
+
+.stat-item {
+  text-align: center;
+}
+
+.stat-number {
+  display: block;
+  font-size: 28px;
+  font-weight: 900;
+  color: var(--sport-accent);
+}
+
+.stat-label {
+  font-size: 12px;
+  color: var(--sport-muted);
+}
+
 .highlight-list {
   padding-left: 20px;
   line-height: 1.8;
+}
+
+.cta-banner {
+  text-align: center;
+  background: var(--sport-navy);
+  color: #fff;
+  padding: 40px 16px;
+  margin-top: 40px;
+  border-radius: 16px;
+}
+
+.cta-banner h2 {
+  color: #fff;
+  margin-bottom: 16px;
 }
 
 table {
@@ -464,5 +557,29 @@ button:disabled {
   .slot-chip {
     flex: 1 1 100%;
     text-align: center;
+  }
+
+  .hero-sporty {
+    flex-direction: column;
+    padding: 32px 20px;
+    text-align: center;
+    border-radius: 12px;
+  }
+
+  .hero-content {
+    max-width: 100%;
+  }
+
+  .hero-sporty h1 {
+    font-size: 30px;
+  }
+
+  .hero-photo-block {
+    width: 160px;
+    height: 190px;
+  }
+
+  .stats-row {
+    gap: 20px 12px;
   }
 }
