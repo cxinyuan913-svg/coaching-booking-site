@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>開放時段管理 - 教練預約網站</title>
+  <link rel="stylesheet" href="/static/css/style.css" />
+</head>
+<body>
+  <nav class="topnav" id="topnav"></nav>
+  <main>
+    <h1>開放時段管理</h1>
+
+    <div class="section-block">
+      <h2>場地</h2>
+      <table>
+        <thead><tr><th>名稱</th><th>地址</th></tr></thead>
+        <tbody id="venue-list"></tbody>
+      </table>
+      <form id="venue-form" style="margin-top: 10px; display: flex; gap: 8px; align-items: flex-end">
+        <div class="form-row" style="margin-bottom: 0">
+          <label for="venue-name">新場地名稱</label>
+          <input id="venue-name" type="text" required />
+        </div>
+        <div class="form-row" style="margin-bottom: 0">
+          <label for="venue-address">地址（選填）</label>
+          <input id="venue-address" type="text" />
+        </div>
+        <button type="submit">新增場地</button>
+      </form>
+    </div>
+
+    <div class="section-block">
+      <h2>課程時長選項</h2>
+      <table>
+        <thead><tr><th>名稱</th><th>時長（分鐘）</th><th>參考價</th></tr></thead>
+        <tbody id="session-type-list"></tbody>
+      </table>
+      <form id="session-type-form" style="margin-top: 10px; display: flex; gap: 8px; align-items: flex-end">
+        <div class="form-row" style="margin-bottom: 0">
+          <label for="st-name">名稱</label>
+          <input id="st-name" type="text" placeholder="例如：60分鐘單堂" required />
+        </div>
+        <div class="form-row" style="margin-bottom: 0">
+          <label for="st-duration">時長（分鐘）</label>
+          <input id="st-duration" type="number" min="15" step="15" value="60" required />
+        </div>
+        <div class="form-row" style="margin-bottom: 0">
+          <label for="st-price">參考價</label>
+          <input id="st-price" type="number" min="0" step="1" value="0" required />
+        </div>
+        <button type="submit">新增選項</button>
+      </form>
+    </div>
+
+    <div class="section-block">
+      <h2>批次開放時段</h2>
+      <p style="color: #666; font-size: 13px">
+        先填起始日期、間隔天數、要開幾次，按「產生日期清單」之後可以在下面
+        把不要開放的日期取消勾選，確認沒問題再按「送出」。
+      </p>
+      <div style="display: flex; gap: 8px; flex-wrap: wrap; align-items: flex-end">
+        <div class="form-row" style="margin-bottom: 0">
+          <label for="batch-venue">場地</label>
+          <select id="batch-venue"></select>
+        </div>
+        <div class="form-row" style="margin-bottom: 0">
+          <label for="batch-session-type">課程</label>
+          <select id="batch-session-type"></select>
+        </div>
+        <div class="form-row" style="margin-bottom: 0">
+          <label for="batch-start-date">起始日期</label>
+          <input id="batch-start-date" type="date" required />
+        </div>
+        <div class="form-row" style="margin-bottom: 0">
+          <label for="batch-start-time">時間</label>
+          <input id="batch-start-time" type="time" value="18:00" required />
+        </div>
+        <div class="form-row" style="margin-bottom: 0">
+          <label for="batch-interval">間隔天數</label>
+          <input id="batch-interval" type="number" min="1" value="7" required />
+        </div>
+        <div class="form-row" style="margin-bottom: 0">
+          <label for="batch-count">開幾次</label>
+          <input id="batch-count" type="number" min="1" value="4" required />
+        </div>
+        <button type="button" id="btn-generate-dates">產生日期清單</button>
+      </div>
+      <div id="date-checkboxes" style="margin-top: 12px"></div>
+      <button type="button" id="btn-submit-batch" style="margin-top: 10px; display: none">送出</button>
+      <p class="error-text" id="batch-error" style="display: none"></p>
+    </div>
+
+    <div class="section-block">
+      <h2>目前所有時段</h2>
+      <table>
+        <thead><tr><th>日期</th><th>時間</th><th>場地</th><th>課程</th><th>狀態</th><th></th></tr></thead>
+        <tbody id="slot-list"></tbody>
+      </table>
+    </div>
+  </main>
+
+  <script src="/static/js/common.js"></script>
+  <script src="/static/js/admin_slots.js"></script>
+</body>
+</html>

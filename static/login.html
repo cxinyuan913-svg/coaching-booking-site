@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>登入 - 教練預約網站</title>
+  <link rel="stylesheet" href="/static/css/style.css" />
+</head>
+<body>
+  <nav class="topnav" id="topnav"></nav>
+  <main>
+    <div class="form-card">
+      <h1>登入</h1>
+      <form id="login-form">
+        <div class="form-row">
+          <label for="f-email">Email</label>
+          <input id="f-email" type="email" required />
+        </div>
+        <div class="form-row">
+          <label for="f-password">密碼</label>
+          <input id="f-password" type="password" required />
+        </div>
+        <p class="error-text" id="error-text" style="display: none"></p>
+        <button type="submit" style="width: 100%">登入</button>
+      </form>
+    </div>
+  </main>
+
+  <script src="/static/js/common.js"></script>
+  <script src="/static/js/login.js"></script>
+</body>
+</html>

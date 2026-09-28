@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>審核申請 - 教練預約網站</title>
+  <link rel="stylesheet" href="/static/css/style.css" />
+</head>
+<body>
+  <nav class="topnav" id="topnav"></nav>
+  <main>
+    <div class="toolbar">
+      <h1>審核申請</h1>
+      <select id="status-filter">
+        <option value="pending">待審核</option>
+        <option value="approved">已核准</option>
+        <option value="rejected">已拒絕</option>
+        <option value="">全部</option>
+      </select>
+    </div>
+    <p class="error-text" id="action-error" style="display: none"></p>
+    <table>
+      <thead>
+        <tr>
+          <th>學生</th>
+          <th>日期</th>
+          <th>時間</th>
+          <th>場地</th>
+          <th>課程</th>
+          <th>備註</th>
+          <th>狀態</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody id="request-list">
+        <tr><td colspan="8">載入中…</td></tr>
+      </tbody>
+    </table>
+  </main>
+
+  <script src="/static/js/common.js"></script>
+  <script src="/static/js/admin_requests.js"></script>
+</body>
+</html>
