@@ -13,12 +13,17 @@
   <nav class="topnav" id="topnav"></nav>
   <main class="home-main">
     <!--
-      這整頁都是佔位內容（用【】標起來），還沒放教練真實的介紹跟照片。
-      等內容確定後換掉：
-      - .hero-photo 跟 .about-photo 的 background-image 換成真實照片網址
-      - .stat-number、【】文字換成真實內容
-      版面設計參考 volunfittc.com.tw：滿版照片 hero + 深色遮罩、粗體大
-      標語配發光色帶、拱門照片框、左色條+icon 的長條 CTA 按鈕。
+      整頁版面完整比照 volunfittc.com.tw 的區塊順序跟視覺手法（滿版照片
+      hero、大字標語配發光色帶、分類選單、Online Booking 區塊配照片拼貼
+      +halftone 網點裝飾、拱門照片框、滿版深色 footer、右側浮動社群
+      icon、回頂部按鈕——後兩者在 common.js 統一注入、所有頁面共用），
+      內容跟功能全部換成我們自己的預約系統。
+
+      這整頁都是佔位內容（用【】標起來），還沒放教練真實的介紹跟照片，
+      也還沒有真實的社群/聯絡資訊。等內容確定後換掉：
+      - .hero-photo、.about-photo、.collage-item 的佔位方塊換成真實照片
+      - 【】文字換成真實內容
+      - common.js 的 floating-dock 連結、footer 的聯絡資訊換成真實的
     -->
     <section class="hero-sporty">
       <div class="hero-photo hero-photo-placeholder">
@@ -41,6 +46,15 @@
       </div>
     </section>
 
+    <!-- 對應原網站的「JOIN US, JOIN VOLUNFIT!」巨大斜體標語衝擊區塊 -->
+    <section class="impact-banner">
+      <div class="impact-glow-bar"></div>
+      <h2 class="impact-headline">加入我們，打出不一樣的你！</h2>
+      <p class="impact-subtitle">
+        【一句話：不管是零基礎想入門，還是想加強技術準備比賽，都歡迎預約體驗。】
+      </p>
+    </section>
+
     <div class="stats-row">
       <div class="stat-item">
         <span class="stat-number">【8】</span>
@@ -55,6 +69,26 @@
         <span class="stat-label">認證教練</span>
       </div>
     </div>
+
+    <!-- 對應原網站的「教練課程/週期專班/小班團課/客製包班」分類選單 -->
+    <section class="category-tabs">
+      <div class="category-tab">
+        <div class="category-tab-icon">🏸</div>
+        <span>單堂體驗</span>
+      </div>
+      <div class="category-tab">
+        <div class="category-tab-icon">📆</div>
+        <span>固定班</span>
+      </div>
+      <div class="category-tab">
+        <div class="category-tab-icon">🎯</div>
+        <span>加強訓練</span>
+      </div>
+      <div class="category-tab">
+        <div class="category-tab-icon">👥</div>
+        <span>包班教學</span>
+      </div>
+    </section>
 
     <section class="about-split">
       <div class="about-photo about-photo-placeholder">
@@ -74,22 +108,41 @@
       </div>
     </section>
 
-    <section class="cta-banner">
-      <h2>準備好開始了嗎？</h2>
-      <div class="cta-banner-actions">
-        <a href="/book.html" class="cta-bar">
-          <span class="cta-bar-icon">📅</span>
-          <span>查看開放時段</span>
-          <span class="cta-bar-arrow">→</span>
-        </a>
-        <a href="#" class="cta-bar cta-bar-secondary">
-          <span class="cta-bar-icon">💬</span>
-          <span>【LINE／聯絡方式】</span>
-          <span class="cta-bar-arrow">→</span>
-        </a>
+    <!-- 對應原網站的「ONLINE BOOKING / 預約方式」區塊：照片拼貼 + halftone 網點裝飾 -->
+    <section class="booking-showcase">
+      <div class="halftone-decor"></div>
+      <div class="booking-showcase-text">
+        <h2>ONLINE BOOKING</h2>
+        <p class="booking-showcase-sub">預約方式</p>
+        <div class="cta-banner-actions">
+          <a href="/book.html" class="cta-bar">
+            <span class="cta-bar-icon">📅</span>
+            <span>查看開放時段</span>
+            <span class="cta-bar-arrow">→</span>
+          </a>
+          <a href="#" class="cta-bar cta-bar-secondary">
+            <span class="cta-bar-icon">💬</span>
+            <span>【LINE／聯絡方式】</span>
+            <span class="cta-bar-arrow">→</span>
+          </a>
+        </div>
+      </div>
+      <div class="booking-collage">
+        <div class="collage-item collage-item-lg">🏸</div>
+        <div class="collage-item">📸</div>
+        <div class="collage-item">📸</div>
+        <div class="collage-item">📸</div>
       </div>
     </section>
   </main>
+
+  <footer class="site-footer">
+    <div class="footer-brand">【教練姓名】羽球教學</div>
+    <p>📞 【聯絡電話】</p>
+    <p>✉️ 【Email】</p>
+    <p>📍 【常用場地地址】</p>
+    <p>🕒 【服務時間，例如：週一至週五 18:00-22:00】</p>
+  </footer>
 
   <script src="/static/js/common.js"></script>
 </body>

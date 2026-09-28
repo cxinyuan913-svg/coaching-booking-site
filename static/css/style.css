@@ -290,6 +290,235 @@ body {
   gap: 16px;
 }
 
+/* 對應原網站「JOIN US, JOIN VOLUNFIT!」的巨大斜體標語衝擊區塊 */
+.impact-banner {
+  position: relative;
+  background: var(--sport-navy);
+  color: #fff;
+  padding: 48px 28px;
+  border-radius: 16px;
+  overflow: hidden;
+  margin: 28px 0;
+}
+
+.impact-glow-bar {
+  position: absolute;
+  top: -30px;
+  left: -10%;
+  width: 55%;
+  height: 110px;
+  background: linear-gradient(90deg, var(--sport-accent), transparent 80%);
+  transform: rotate(-8deg);
+  opacity: 0.55;
+  filter: blur(6px);
+}
+
+.impact-headline {
+  position: relative;
+  font-size: 34px;
+  font-weight: 900;
+  font-style: italic;
+  letter-spacing: 0.5px;
+  margin: 0 0 12px;
+}
+
+.impact-subtitle {
+  position: relative;
+  color: var(--sport-muted);
+  font-size: 15px;
+  max-width: 620px;
+}
+
+/* 對應原網站的分類選單（教練課程/週期專班/小班團課/客製包班） */
+.category-tabs {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 28px;
+}
+
+.category-tab {
+  flex: 1;
+  min-width: 120px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  padding: 18px 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--sport-navy);
+  text-align: center;
+}
+
+.category-tab-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--sport-navy);
+  color: var(--sport-accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+}
+
+/* 對應原網站的「ONLINE BOOKING / 預約方式」：照片拼貼 + halftone 網點 */
+.booking-showcase {
+  position: relative;
+  background: var(--sport-navy);
+  color: #fff;
+  border-radius: 16px;
+  padding: 36px;
+  margin: 28px 0;
+  display: flex;
+  gap: 32px;
+  align-items: center;
+  flex-wrap: wrap;
+  overflow: hidden;
+}
+
+.booking-showcase-text {
+  position: relative;
+  z-index: 2;
+  flex: 1;
+  min-width: 240px;
+}
+
+.booking-showcase h2 {
+  font-size: 28px;
+  font-weight: 900;
+  font-style: italic;
+  margin: 0 0 4px;
+}
+
+.booking-showcase-sub {
+  color: var(--sport-muted);
+  margin: 0 0 20px;
+}
+
+.booking-collage {
+  position: relative;
+  z-index: 2;
+  flex: 1;
+  min-width: 220px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-auto-rows: 60px;
+  gap: 8px;
+}
+
+.collage-item {
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  background: linear-gradient(160deg, #2a3364, #3d4a8a);
+  color: var(--sport-muted);
+}
+
+.collage-item-lg {
+  grid-row: span 2;
+  grid-column: span 2;
+}
+
+.halftone-decor {
+  position: absolute;
+  right: -30px;
+  top: -20px;
+  bottom: -20px;
+  width: 160px;
+  background-image: radial-gradient(rgba(245, 217, 10, 0.45) 1.5px, transparent 1.5px);
+  background-size: 10px 10px;
+  z-index: 1;
+}
+
+/* 右側浮動社群 icon + 回頂部按鈕，所有頁面共用（見 common.js） */
+.floating-dock {
+  position: fixed;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 80;
+}
+
+.dock-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 19px;
+  text-decoration: none;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+}
+
+.dock-line {
+  background: #06c755;
+}
+
+.dock-fb {
+  background: #1877f2;
+}
+
+.dock-ig {
+  background: radial-gradient(circle at 30% 110%, #fdf497, #fd5949 45%, #d6249f 60%, #285aeb 90%);
+}
+
+.dock-book {
+  background: var(--sport-accent);
+}
+
+.back-to-top {
+  position: fixed;
+  left: 16px;
+  bottom: 16px;
+  background: var(--sport-navy);
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  font-size: 10px;
+  font-weight: 700;
+  cursor: pointer;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+  z-index: 80;
+}
+
+.back-to-top.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* 滿版深色 footer，比照原網站的聯絡資訊區塊（單教練只需要一欄，原網站
+   因為有多個分館才有四欄） */
+.site-footer {
+  background: #0a0d1a;
+  color: var(--sport-muted);
+  padding: 32px 24px;
+  font-size: 13px;
+  line-height: 1.9;
+}
+
+.footer-brand {
+  color: #fff;
+  font-weight: 800;
+  font-size: 16px;
+  margin-bottom: 8px;
+}
+
 table {
   width: 100%;
   border-collapse: collapse;
@@ -686,5 +915,40 @@ button:disabled {
   .cta-bar {
     width: 100%;
     justify-content: center;
+  }
+
+  .impact-headline {
+    font-size: 24px;
+  }
+
+  .category-tabs {
+    justify-content: center;
+  }
+
+  .category-tab {
+    min-width: 40%;
+  }
+
+  .booking-showcase {
+    padding: 24px 20px;
+  }
+
+  .booking-collage {
+    grid-auto-rows: 50px;
+  }
+
+  .halftone-decor {
+    display: none; /* 窄螢幕版面已經很擠，網點裝飾在這裡只會干擾閱讀 */
+  }
+
+  .floating-dock {
+    right: 8px;
+    gap: 8px;
+  }
+
+  .dock-icon {
+    width: 38px;
+    height: 38px;
+    font-size: 16px;
   }
 }

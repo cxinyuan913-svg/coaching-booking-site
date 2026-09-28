@@ -122,4 +122,32 @@ async function getCurrentUser() {
   }
 }
 
+// 右側浮動社群 icon + 回頂部按鈕，比照 volunfittc.com.tw 的做法，所有
+// 頁面共用同一份（position:fixed 不需要放在特定 HTML 位置，直接掛到
+// document.body 尾端即可）。連結目前都是佔位用的 #，等有真實的
+// LINE/FB/IG 帳號再換掉 href。
+function renderFloatingExtras() {
+  const dock = document.createElement("div");
+  dock.className = "floating-dock";
+  dock.innerHTML = `
+    <a href="#" class="dock-icon dock-line" title="LINE">💬</a>
+    <a href="#" class="dock-icon dock-fb" title="Facebook">📘</a>
+    <a href="#" class="dock-icon dock-ig" title="Instagram">📷</a>
+    <a href="/book.html" class="dock-icon dock-book" title="立即預約">📅</a>
+  `;
+  document.body.appendChild(dock);
+
+  const topBtn = document.createElement("button");
+  topBtn.type = "button";
+  topBtn.className = "back-to-top";
+  topBtn.textContent = "↑ TOP";
+  topBtn.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
+  document.body.appendChild(topBtn);
+
+  const toggleTopBtn = () => topBtn.classList.toggle("show", window.scrollY > 400);
+  window.addEventListener("scroll", toggleTopBtn, { passive: true });
+  toggleTopBtn();
+}
+
 document.addEventListener("DOMContentLoaded", renderNav);
+document.addEventListener("DOMContentLoaded", renderFloatingExtras);
