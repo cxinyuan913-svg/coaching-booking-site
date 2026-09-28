@@ -1,25 +1,314 @@
-/* 共用樣式：導覽列、表格、表單、Modal（跟 coaching-record-tool 同一套精簡版） */
+/* 共用樣式。設計規範（design tokens）、導覽列、按鈕、格線系統是這次
+   （Raymond 羽球教室版）重新設計的；表格/表單/Modal 這些跟頁面設計無關
+   的共用元件維持原本的簡單風格，admin/login/register/my_bookings 這幾個
+   後台/工具頁面繼續用。 */
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Barlow+Condensed:wght@600;700&display=swap");
+
 * {
   box-sizing: border-box;
+}
+
+:root {
+  --green-900: #0f3b2e; /* 主色：深球場綠，導覽列/Hero/深色區塊 */
+  --green-700: #1f5a3a; /* 淺底上的連結、英文小標 */
+  --lime: #c9e84a; /* 重點色：只放在深色底上，或當按鈕底色（按鈕文字用 --ink） */
+  --paper: #f3f1ea; /* 頁面底色 */
+  --paper-2: #e9e6dc; /* 次要區塊底色（教練介紹） */
+  --card: #ffffff;
+  --line: #d9d5c8; /* 卡片邊框 */
+  --ink: #14201c; /* 主要文字 */
+  --ink-2: #3e4a44; /* 內文次要文字 */
+  --ink-3: #5a665f; /* 註解文字 */
+  --footer: #0e1a16;
+
+  --radius-card: 20px;
+  --radius-pill: 999px;
+  --gutter-desktop: 64px;
+  --gutter-mobile: 16px;
 }
 
 body {
   margin: 0;
   font-family: "Noto Sans TC", "Microsoft JhengHei", system-ui, sans-serif;
-  background: #f5f6f8;
-  color: #222;
+  background: var(--paper);
+  color: var(--ink);
 }
 
+/* 英文小標／數字一律用 Barlow Condensed，全大寫、letter-spacing，
+   比照設計稿「每個區塊標題上方有英文小標」的中英雙標排法 */
+.eyebrow,
+.stat-number,
+.nav-en {
+  font-family: "Barlow Condensed", "Noto Sans TC", sans-serif;
+}
+
+.eyebrow {
+  display: block;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 14px;
+  color: var(--green-700);
+  margin: 0 0 8px;
+}
+
+/* 深色底上的英文小標用萊姆色，比照 Hero／預約方式這些深綠區塊 */
+.on-dark .eyebrow {
+  color: var(--lime);
+}
+
+h1,
+h2,
+h3 {
+  font-weight: 900;
+  margin: 0 0 12px;
+  color: var(--ink);
+}
+
+.on-dark h1,
+.on-dark h2,
+.on-dark h3 {
+  color: #fff;
+}
+
+/* ---------- 12 欄格線容器 ---------- */
+.container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 var(--gutter-desktop);
+}
+
+.grid-12 {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 24px;
+}
+
+@media (max-width: 1023px) {
+  .container {
+    padding: 0 var(--gutter-mobile);
+  }
+
+  .grid-12 {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+}
+
+/* ---------- 按鈕：卡片圓角 20px、按鈕膠囊 999px ---------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 14px 28px;
+  border-radius: var(--radius-pill);
+  font-weight: 700;
+  font-size: 15px;
+  text-decoration: none;
+  border: 2px solid transparent;
+  cursor: pointer;
+  min-height: 44px; /* 觸控目標 >=44px */
+  transition: transform 0.15s ease, opacity 0.15s ease;
+}
+
+.btn:active {
+  transform: scale(0.97);
+}
+
+.btn-primary {
+  background: var(--lime);
+  color: var(--ink);
+}
+
+.btn-primary:hover {
+  opacity: 0.9;
+}
+
+.btn-primary:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.btn-outline {
+  background: transparent;
+  border-color: #fff;
+  color: #fff;
+}
+
+.btn-outline:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.btn-outline-dark {
+  background: transparent;
+  border-color: var(--green-900);
+  color: var(--green-900);
+}
+
+.btn-outline-dark:hover {
+  background: rgba(15, 59, 46, 0.06);
+}
+
+.btn-block {
+  width: 100%;
+}
+
+/* ---------- 導覽列 ---------- */
 nav.topnav {
+  background: var(--green-900);
+}
+
+.nav-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 14px var(--gutter-mobile);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+@media (min-width: 1024px) {
+  .nav-inner {
+    padding: 14px var(--gutter-desktop);
+  }
+}
+
+.nav-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: #fff;
+  flex-shrink: 0;
+}
+
+.nav-logo svg {
+  width: 28px;
+  height: 28px;
+  color: var(--lime);
+}
+
+.nav-logo-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+}
+
+.nav-logo-text strong {
+  font-size: 15px;
+}
+
+.nav-logo-text small {
+  font-family: "Barlow Condensed", sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  color: var(--lime);
+}
+
+.nav-menu {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.nav-menu a {
+  color: #e7e5da;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.nav-menu a:hover,
+.nav-menu a.active {
+  color: #fff;
+}
+
+.nav-menu a .nav-en {
+  display: block;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  color: var(--lime);
+  text-transform: uppercase;
+}
+
+.nav-cta-mobile {
+  display: none; /* 預設不顯示，只在下面手機版 media query 裡打開 */
+}
+
+.nav-cta {
+  flex-shrink: 0;
+  padding: 10px 22px;
+  font-size: 14px;
+}
+
+.nav-hamburger {
+  display: none;
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 24px;
+  cursor: pointer;
+  min-width: 44px;
+  min-height: 44px;
+}
+
+/* 手機版導覽列收成漢堡選單 */
+@media (max-width: 1023px) {
+  .nav-hamburger {
+    display: block;
+  }
+
+  .nav-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: var(--green-900);
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0;
+    padding: 8px 16px 16px;
+  }
+
+  .nav-menu.open {
+    display: flex;
+  }
+
+  .nav-menu a {
+    width: 100%;
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  nav.topnav {
+    position: relative;
+  }
+
+  .nav-cta {
+    display: none; /* 手機版預約按鈕改放漢堡選單裡最下面，見 common.js */
+  }
+
+  .nav-menu .nav-cta-mobile {
+    display: inline-flex;
+    margin-top: 12px;
+  }
+}
+
+/* 簡易版導覽列：教練登入後台、以及 login/register 這類工具頁用，
+   維持原本精簡的樣式，不套用上面行銷網站那套 logo/漢堡設計 */
+.nav-simple {
   display: flex;
   gap: 4px;
-  background: #2d3142;
-  padding: 0 16px;
   overflow-x: auto;
   white-space: nowrap;
 }
 
-nav.topnav a {
+.nav-simple a {
   color: #d8dae3;
   text-decoration: none;
   padding: 14px 16px;
@@ -27,547 +316,36 @@ nav.topnav a {
   flex-shrink: 0;
 }
 
-nav.topnav a:hover,
-nav.topnav a.active {
+.nav-simple a:hover,
+.nav-simple a.active {
   color: #fff;
-  background: #40465e;
+  background: rgba(255, 255, 255, 0.08);
 }
 
 main {
-  max-width: 900px;
-  margin: 24px auto;
-  padding: 0 16px;
   overflow-x: auto;
 }
 
-h1 {
-  font-size: 20px;
-  margin-bottom: 16px;
-}
-
-/* 首頁封面：動感運動風（深色底 + 亮黃重點色，大字體標語 + 斜角色塊） */
-:root {
-  /* 顏色比照 volunfittc.com.tw 的實際配色：黑＋橘，不是藍＋黃 */
-  --sport-navy: #121212;
-  --sport-navy-light: #1e1e1e;
-  --sport-accent: #f0801f;
-  --sport-muted: #c2c2c2;
-}
-
-/* 首頁 <main> 要讓 hero 區塊滿版撐出去，這裡不能繼續套用共用的
-   max-width:900px（見 .home-main .hero-sporty 的「撐滿版寬」技巧） */
-.home-main {
-  overflow: visible;
-}
-
-body {
-  overflow-x: hidden; /* hero 滿版用負 margin 撐出視窗寬度，避免因此多出橫向捲軸 */
-}
-
-/* hero：滿版照片＋深色漸層遮罩＋粗體大標語，設計參考 volunfittc.com.tw */
-.home-main .hero-sporty {
-  position: relative;
-  width: 100vw;
-  left: 50%;
-  right: 50%;
-  margin-left: -50vw;
-  margin-right: -50vw;
-  margin-top: 0;
-  min-height: 440px;
-  display: flex;
-  align-items: center;
-  overflow: hidden;
-  color: #fff;
-}
-
-.hero-photo {
-  position: absolute;
-  inset: 0;
-  background-size: cover;
-  background-position: center;
-}
-
-.hero-photo-placeholder {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: linear-gradient(135deg, var(--sport-navy) 0%, var(--sport-navy-light) 100%);
-  color: var(--sport-muted);
-  font-size: 13px;
-  text-align: center;
-  padding: 24px;
-}
-
-.hero-overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    100deg,
-    rgba(18, 23, 43, 0.96) 0%,
-    rgba(18, 23, 43, 0.75) 45%,
-    rgba(18, 23, 43, 0.3) 100%
-  );
-}
-
-.hero-content {
-  position: relative;
-  z-index: 2;
-  width: 100%;
+.page-main {
   max-width: 900px;
-  margin: 0 auto;
-  padding: 64px 24px;
+  margin: 24px auto;
+  padding: 0 16px;
 }
 
-.hero-eyebrow {
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  font-size: 12px;
-  color: var(--sport-accent);
-  font-weight: 800;
-  margin: 0 0 10px;
-}
-
-.hero-headline {
-  font-size: 42px;
-  font-weight: 900;
-  margin: 0 0 10px;
-  line-height: 1.25;
-}
-
-/* 標語裡的關鍵字後面配一道斜向發光色帶，呼應參考網站的視覺重點 */
-.hero-glow {
-  position: relative;
-  display: inline-block;
-}
-
-.hero-glow::before {
-  content: "";
-  position: absolute;
-  left: -12%;
-  top: 50%;
-  width: 124%;
-  height: 70px;
-  background: radial-gradient(ellipse at left, rgba(240, 128, 31, 0.55), transparent 70%);
-  transform: translateY(-50%) rotate(-6deg);
-  z-index: -1;
-  filter: blur(2px);
-}
-
-.hero-tagline-en {
-  color: var(--sport-accent);
-  font-weight: 700;
-  font-style: italic;
-  font-size: 14px;
-  margin: 0 0 10px;
-}
-
-.hero-sporty .hero-tagline {
-  font-size: 16px;
-  color: var(--sport-muted);
-  margin-bottom: 28px;
-}
-
-/* 長條型 CTA：左邊色條 + icon + 文字 + 箭頭，取代原本的圓角按鈕 */
-.cta-bar {
-  display: inline-flex;
-  align-items: center;
-  gap: 14px;
-  background: rgba(255, 255, 255, 0.1);
-  border-left: 4px solid var(--sport-accent);
-  color: #fff;
-  text-decoration: none;
-  padding: 14px 20px;
-  font-weight: 700;
-  font-size: 15px;
-}
-
-.cta-bar:hover {
-  background: rgba(255, 255, 255, 0.18);
-}
-
-.cta-bar-arrow {
-  margin-left: 12px;
-  transition: transform 0.15s ease;
-}
-
-.cta-bar:hover .cta-bar-arrow {
-  transform: translateX(4px);
-}
-
-.cta-bar-secondary {
-  border-left-color: #6b6b6b;
-  background: rgba(255, 255, 255, 0.05);
-}
-
-.stats-row {
-  display: flex;
-  justify-content: space-around;
-  flex-wrap: wrap;
-  background: var(--sport-navy);
-  color: #fff;
-  padding: 24px 16px;
-  margin: 20px 0 28px;
-  border-radius: 12px;
-  gap: 16px;
-}
-
-.stat-item {
-  text-align: center;
-}
-
-.stat-number {
-  display: block;
-  font-size: 28px;
-  font-weight: 900;
-  color: var(--sport-accent);
-}
-
-.stat-label {
-  font-size: 12px;
-  color: var(--sport-muted);
+/* ---------- 共用卡片 ---------- */
+.card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-card);
 }
 
 .highlight-list {
   padding-left: 20px;
   line-height: 1.8;
+  color: var(--ink-2);
 }
 
-/* 自我介紹：拱門造型照片（上兩角大圓角、下兩角小圓角）+ 文字並排 */
-.about-split {
-  display: flex;
-  gap: 32px;
-  align-items: center;
-  margin: 8px 0 28px;
-  flex-wrap: wrap;
-}
-
-.about-photo {
-  flex: 0 0 220px;
-  width: 220px;
-  height: 280px;
-  border-radius: 110px 110px 8px 8px;
-  background-size: cover;
-  background-position: center;
-}
-
-.about-photo-placeholder {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: linear-gradient(160deg, #dfe2ea, #c7cbe0);
-  color: #666;
-  font-size: 13px;
-  text-align: center;
-  padding: 16px;
-}
-
-.about-text {
-  flex: 1;
-  min-width: 260px;
-}
-
-.about-text h2 {
-  margin-top: 0;
-}
-
-.cta-banner {
-  text-align: center;
-  background: var(--sport-navy);
-  color: #fff;
-  padding: 40px 16px;
-  margin-top: 40px;
-  border-radius: 16px;
-}
-
-.cta-banner h2 {
-  color: #fff;
-  margin-bottom: 16px;
-}
-
-.cta-banner-actions {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 16px;
-}
-
-/* 對應原網站「JOIN US, JOIN VOLUNFIT!」的巨大斜體標語衝擊區塊 */
-.impact-banner {
-  position: relative;
-  background: var(--sport-navy);
-  color: #fff;
-  padding: 48px 28px;
-  border-radius: 16px;
-  overflow: hidden;
-  margin: 28px 0;
-}
-
-.impact-glow-bar {
-  position: absolute;
-  top: -30px;
-  left: -10%;
-  width: 55%;
-  height: 110px;
-  background: linear-gradient(90deg, var(--sport-accent), transparent 80%);
-  transform: rotate(-8deg);
-  opacity: 0.55;
-  filter: blur(6px);
-}
-
-.impact-headline {
-  position: relative;
-  font-size: 34px;
-  font-weight: 900;
-  font-style: italic;
-  letter-spacing: 0.5px;
-  margin: 0 0 12px;
-}
-
-.impact-subtitle {
-  position: relative;
-  color: var(--sport-muted);
-  font-size: 15px;
-  max-width: 620px;
-}
-
-/* 對應原網站的分類選單（教練課程/週期專班/小班團課/客製包班） */
-.category-tabs {
-  display: flex;
-  justify-content: space-between;
-  gap: 12px;
-  flex-wrap: wrap;
-  margin-bottom: 28px;
-}
-
-.category-tab {
-  flex: 1;
-  min-width: 120px;
-  background: #fff;
-  border-radius: 10px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  padding: 18px 12px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-  font-size: 13px;
-  font-weight: 700;
-  color: var(--sport-navy);
-  text-align: center;
-}
-
-.category-tab-icon {
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  background: var(--sport-navy);
-  color: var(--sport-accent);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 20px;
-}
-
-/* 對應原網站的「ONLINE BOOKING / 預約方式」：照片拼貼 + halftone 網點 */
-.booking-showcase {
-  position: relative;
-  background: var(--sport-navy);
-  color: #fff;
-  border-radius: 16px;
-  padding: 36px;
-  margin: 28px 0;
-  display: flex;
-  gap: 32px;
-  align-items: center;
-  flex-wrap: wrap;
-  overflow: hidden;
-}
-
-.booking-showcase-text {
-  position: relative;
-  z-index: 2;
-  flex: 1;
-  min-width: 240px;
-}
-
-.booking-showcase h2 {
-  font-size: 28px;
-  font-weight: 900;
-  font-style: italic;
-  margin: 0 0 4px;
-}
-
-.booking-showcase-sub {
-  color: var(--sport-muted);
-  margin: 0 0 20px;
-}
-
-.booking-collage {
-  position: relative;
-  z-index: 2;
-  flex: 1;
-  min-width: 220px;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-auto-rows: 60px;
-  gap: 8px;
-}
-
-.collage-item {
-  border-radius: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 22px;
-  background: linear-gradient(160deg, #2a2a2a, #3d3d3d);
-  color: var(--sport-muted);
-}
-
-.collage-item-lg {
-  grid-row: span 2;
-  grid-column: span 2;
-}
-
-.halftone-decor {
-  position: absolute;
-  right: -30px;
-  top: -20px;
-  bottom: -20px;
-  width: 160px;
-  background-image: radial-gradient(rgba(240, 128, 31, 0.45) 1.5px, transparent 1.5px);
-  background-size: 10px 10px;
-  z-index: 1;
-}
-
-/* 斜紋警示條紋裝飾，比照原網站 hero 底部的黑橘斜紋 */
-.stripe-decor {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 2;
-  height: 14px;
-  background: repeating-linear-gradient(
-    -45deg,
-    var(--sport-accent),
-    var(--sport-accent) 14px,
-    #000 14px,
-    #000 28px
-  );
-}
-
-/* hero 裡的圓形旋轉徽章，比照原網站標語旁邊的旋轉印章文字 */
-.hero-badge {
-  position: absolute;
-  top: -8px;
-  right: 0;
-  width: 92px;
-  height: 92px;
-  color: var(--sport-accent);
-  z-index: 3;
-}
-
-.hero-badge-svg {
-  width: 100%;
-  height: 100%;
-  animation: hero-badge-spin 14s linear infinite;
-}
-
-.hero-badge-center {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 22px;
-}
-
-@keyframes hero-badge-spin {
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-/* 右側浮動社群 icon + 回頂部按鈕，所有頁面共用（見 common.js） */
-.floating-dock {
-  position: fixed;
-  right: 16px;
-  top: 50%;
-  transform: translateY(-50%);
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  z-index: 80;
-}
-
-.dock-icon {
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 19px;
-  text-decoration: none;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
-}
-
-.dock-line {
-  background: #06c755;
-}
-
-.dock-fb {
-  background: #1877f2;
-}
-
-.dock-ig {
-  background: radial-gradient(circle at 30% 110%, #fdf497, #fd5949 45%, #d6249f 60%, #285aeb 90%);
-}
-
-.dock-book {
-  background: var(--sport-accent);
-}
-
-.back-to-top {
-  position: fixed;
-  left: 16px;
-  bottom: 16px;
-  background: var(--sport-navy);
-  color: #fff;
-  border: none;
-  border-radius: 50%;
-  width: 48px;
-  height: 48px;
-  font-size: 10px;
-  font-weight: 700;
-  cursor: pointer;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.2s ease;
-  z-index: 80;
-}
-
-.back-to-top.show {
-  opacity: 1;
-  pointer-events: auto;
-}
-
-/* 滿版深色 footer，比照原網站的聯絡資訊區塊（單教練只需要一欄，原網站
-   因為有多個分館才有四欄） */
-.site-footer {
-  background: #0a0d1a;
-  color: var(--sport-muted);
-  padding: 32px 24px;
-  font-size: 13px;
-  line-height: 1.9;
-}
-
-.footer-brand {
-  color: #fff;
-  font-weight: 800;
-  font-size: 16px;
-  margin-bottom: 8px;
-}
-
+/* ---------- 表格/表單/Modal：跟頁面設計無關的共用元件，維持原樣 ---------- */
 table {
   width: 100%;
   border-collapse: collapse;
@@ -598,7 +376,7 @@ button {
   border-radius: 4px;
   padding: 6px 12px;
   font-size: 13px;
-  background: #4a5cff;
+  background: var(--green-900);
   color: #fff;
 }
 
@@ -608,7 +386,7 @@ button.secondary {
 }
 
 button.danger {
-  background: #e35555;
+  background: #c0392b;
 }
 
 button:disabled {
@@ -665,6 +443,7 @@ button:disabled {
   border: 1px solid #ccc;
   border-radius: 4px;
   font-size: 14px;
+  font-family: inherit;
 }
 
 .error-text {
@@ -682,199 +461,6 @@ button:disabled {
   margin-bottom: 8px;
 }
 
-/* 開放時段月曆（Calendly 風格：選日期 → 冒出當天時段） */
-.calendar-card {
-  background: #fff;
-  border-radius: 8px;
-  padding: 16px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  margin-bottom: 20px;
-}
-
-.calendar-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 10px;
-}
-
-.calendar-header h2 {
-  font-size: 16px;
-  margin: 0;
-}
-
-.calendar-weekdays,
-.calendar-grid {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 4px;
-}
-
-.calendar-weekdays span {
-  text-align: center;
-  font-size: 12px;
-  color: #888;
-  padding: 4px 0;
-}
-
-.calendar-day {
-  aspect-ratio: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  border-radius: 8px;
-  font-size: 14px;
-  color: #999;
-}
-
-.calendar-day.empty {
-  visibility: hidden;
-}
-
-.calendar-day.has-slots {
-  cursor: pointer;
-  background: #eef0ff;
-  color: #2d3142;
-  font-weight: 600;
-}
-
-.calendar-day.has-slots:hover {
-  background: #dde0ff;
-}
-
-.calendar-day.selected {
-  background: #4a5cff;
-  color: #fff;
-}
-
-.slot-dot {
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  background: #4a5cff;
-  margin-top: 2px;
-}
-
-.calendar-day.selected .slot-dot {
-  background: #fff;
-}
-
-.slot-chip-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-
-.slot-chip {
-  background: #fff;
-  border: 1px solid #ccd0dc;
-  border-radius: 20px;
-  padding: 10px 18px;
-  font-size: 14px;
-  color: #2d3142;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
-}
-
-.slot-chip:hover {
-  border-color: #4a5cff;
-  color: #4a5cff;
-}
-
-/* 選日期後的時段面板：手機是從底部滑出的 bottom sheet（蓋在月曆上面，
-   不用捲動頁面就看得到），桌面／平板夠寬時改成月曆右邊的固定側欄，
-   兩者同時顯示。切換由下面兩個 @media 決定，JS 只負責加/拿掉 .open。 */
-.booking-layout {
-  position: relative;
-}
-
-#day-slots-backdrop {
-  display: none;
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.4);
-  z-index: 40;
-}
-
-#day-slots-backdrop.show {
-  display: block;
-}
-
-.day-slots-panel {
-  position: fixed;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: #fff;
-  border-radius: 16px 16px 0 0;
-  box-shadow: 0 -2px 16px rgba(0, 0, 0, 0.18);
-  padding: 8px 16px 20px;
-  max-height: 65vh;
-  overflow-y: auto;
-  z-index: 50;
-  transform: translateY(100%);
-  transition: transform 0.25s ease;
-}
-
-.day-slots-panel.open {
-  transform: translateY(0);
-}
-
-.day-slots-panel-handle {
-  width: 40px;
-  height: 4px;
-  border-radius: 2px;
-  background: #ddd;
-  margin: 6px auto 12px;
-}
-
-.day-slots-panel-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 10px;
-}
-
-.day-slots-panel-header h2 {
-  font-size: 16px;
-  margin: 0;
-}
-
-/* 畫面夠寬（平板橫向／桌機）：月曆＋時段面板並排，都常駐顯示，不用點按才出現 */
-@media (min-width: 700px) {
-  .booking-layout {
-    display: flex;
-    gap: 20px;
-    align-items: flex-start;
-  }
-
-  .calendar-card {
-    flex: 1;
-    margin-bottom: 0;
-  }
-
-  #day-slots-backdrop {
-    display: none !important;
-  }
-
-  .day-slots-panel {
-    position: static;
-    transform: none;
-    flex: 1;
-    max-height: none;
-    overflow: visible;
-    border-radius: 8px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    padding: 16px;
-  }
-
-  .day-slots-panel-handle,
-  #btn-close-day-slots {
-    display: none;
-  }
-}
-
-/* Modal（confirmDialog 用） */
 .modal-backdrop {
   display: none;
   position: fixed;
@@ -905,9 +491,9 @@ button:disabled {
   margin-top: 16px;
 }
 
-/* 手機版適配 */
+/* 手機版共用調整 */
 @media (max-width: 640px) {
-  main {
+  .page-main {
     margin: 12px auto;
     padding: 0 10px;
   }
@@ -927,81 +513,5 @@ button:disabled {
   .form-card {
     margin: 16px auto;
     max-width: 100%;
-  }
-
-  .calendar-day {
-    font-size: 12px;
-    border-radius: 6px;
-  }
-
-  .slot-chip {
-    flex: 1 1 100%;
-    text-align: center;
-  }
-
-  .hero-content {
-    padding: 40px 20px;
-    text-align: center;
-  }
-
-  .hero-headline {
-    font-size: 28px;
-  }
-
-  .stats-row {
-    gap: 20px 12px;
-  }
-
-  .about-split {
-    justify-content: center;
-    text-align: center;
-  }
-
-  .about-photo {
-    margin: 0 auto;
-  }
-
-  .cta-bar {
-    width: 100%;
-    justify-content: center;
-  }
-
-  .impact-headline {
-    font-size: 24px;
-  }
-
-  .category-tabs {
-    justify-content: center;
-  }
-
-  .category-tab {
-    min-width: 40%;
-  }
-
-  .booking-showcase {
-    padding: 24px 20px;
-  }
-
-  .booking-collage {
-    grid-auto-rows: 50px;
-  }
-
-  .halftone-decor {
-    display: none; /* 窄螢幕版面已經很擠，網點裝飾在這裡只會干擾閱讀 */
-  }
-
-  .floating-dock {
-    right: 8px;
-    gap: 8px;
-  }
-
-  .dock-icon {
-    width: 38px;
-    height: 38px;
-    font-size: 16px;
-  }
-
-  .hero-badge {
-    display: none; /* 窄螢幕空間有限，旋轉徽章容易跟標語文字疊在一起 */
   }
 }

@@ -1,5 +1,4 @@
-// 共用 fetch 工具與導覽列 active 狀態標示（跟 coaching-record-tool 的
-// static/js/common.js 同一套，直接搬過來用）
+// 共用 fetch 工具與導覽列渲染
 
 async function apiRequest(method, url, body) {
   const res = await fetch(url, {
@@ -27,7 +26,8 @@ const api = {
   delete: (url) => apiRequest("DELETE", url),
 };
 
-// 置中的確認視窗，取代原生 confirm()
+// 置中的確認視窗，取代原生 confirm()（原生 confirm/alert 會整個鎖住分頁，
+// 沒辦法用程式化方式關掉，一律避免使用，見 CLAUDE.md 的開發慣例）
 function confirmDialog(message) {
   return new Promise((resolve) => {
     const backdrop = document.createElement("div");
@@ -65,40 +65,84 @@ function highlightActiveNav() {
   });
 }
 
-// 依登入狀態組出導覽列連結：未登入只看得到登入/註冊；一般學生看得到
-// 開放時段／我的預約；教練看得到後台的兩個管理頁，並且都比一般連結多一個
-// 登出。放在 common.js 統一處理，每個頁面的 <nav id="topnav"> 都空著讓
-// 這裡填，不用每頁各自寫一份判斷邏輯。
-async function renderNav() {
-  const nav = document.getElementById("topnav");
-  if (!nav) return;
-  const user = await getCurrentUser();
+const BADMINTON_LOGO_SVG = `
+  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M12 3 L3 12 L7 21 L21 7 Z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/>
+    <path d="M12 3 L21 7 M3 12 L7 21 M12 3 L7 21 M3 12 L21 7" stroke="currentColor" stroke-width="0.7" opacity="0.6"/>
+    <circle cx="17" cy="17" r="2.4" fill="currentColor"/>
+  </svg>
+`;
 
-  const links = [];
-  if (user && user.is_coach) {
-    links.push(["/", "首頁"]);
-    links.push(["/admin_slots.html", "開放時段管理"]);
-    links.push(["/admin_requests.html", "審核申請"]);
-  } else {
-    links.push(["/", "首頁"]);
-    links.push(["/book.html", "立即預約"]);
-    if (user) links.push(["/my_bookings.html", "我的預約"]);
-  }
+// 行銷網站導覽列（首頁那套設計）：左 logo、中間錨點選單、右邊預約按鈕，
+// 手機版收成漢堡選單。錨點一律用 /#id 的絕對路徑，不管使用者現在在哪個
+// 頁面點都會先跳回首頁、捲到對應區塊，不用每頁各自判斷路徑。
+function renderMarketingNav(nav, user) {
+  nav.innerHTML = `
+    <div class="nav-inner">
+      <a href="/" class="nav-logo">
+        ${BADMINTON_LOGO_SVG}
+        <span class="nav-logo-text">
+          <strong>Raymond 羽球教室</strong>
+          <small>BADMINTON COACHING</small>
+        </span>
+      </a>
+      <button type="button" class="nav-hamburger" aria-label="開啟選單">☰</button>
+      <div class="nav-menu" id="nav-menu">
+        <a href="/#about">關於教練<span class="nav-en">About</span></a>
+        <a href="/#course">課程介紹<span class="nav-en">Course</span></a>
+        <a href="/#process">上課流程<span class="nav-en">Process</span></a>
+        <a href="/#venue">上課場地<span class="nav-en">Venue</span></a>
+        <a href="/#faq">常見問題<span class="nav-en">FAQ</span></a>
+        ${user ? '<a href="/my_bookings.html">我的預約</a><a href="#" id="nav-logout">登出</a>' : ""}
+        <a href="/book.html" class="btn btn-primary nav-cta-mobile">預約體驗<span class="nav-en">Booking</span></a>
+      </div>
+      <a href="/book.html" class="btn btn-primary nav-cta">預約體驗<span class="nav-en">Booking</span></a>
+    </div>
+  `;
 
-  nav.innerHTML = links.map(([href, label]) => `<a href="${href}">${label}</a>`).join("");
+  nav.querySelector(".nav-hamburger").addEventListener("click", () => {
+    nav.querySelector(".nav-menu").classList.toggle("open");
+  });
 
-  if (user) {
-    const logout = document.createElement("a");
-    logout.href = "#";
-    logout.textContent = "登出";
+  const logout = nav.querySelector("#nav-logout");
+  if (logout) {
     logout.addEventListener("click", async (e) => {
       e.preventDefault();
       await api.post("/api/auth/logout", null).catch(() => {});
       window.location.href = "/login.html";
     });
-    nav.appendChild(logout);
+  }
+}
+
+// 教練後台用的簡易導覽列：維持原本「一排文字連結」的精簡風格
+function renderSimpleNav(nav, user) {
+  const links = [
+    ["/", "首頁"],
+    ["/admin_slots.html", "開放時段管理"],
+    ["/admin_requests.html", "審核申請"],
+  ];
+  nav.innerHTML = `<div class="nav-simple">${links
+    .map(([href, label]) => `<a href="${href}">${label}</a>`)
+    .join("")}<a href="#" id="nav-logout">登出</a></div>`;
+
+  nav.querySelector("#nav-logout").addEventListener("click", async (e) => {
+    e.preventDefault();
+    await api.post("/api/auth/logout", null).catch(() => {});
+    window.location.href = "/login.html";
+  });
+}
+
+// 依登入狀態決定導覽列長怎樣：教練看到後台的簡易導覽列；其他人（不管
+// 有沒有登入）看到行銷網站那套 logo+錨點選單+預約按鈕的導覽列。
+async function renderNav() {
+  const nav = document.getElementById("topnav");
+  if (!nav) return;
+  const user = await getCurrentUser();
+
+  if (user && user.is_coach) {
+    renderSimpleNav(nav, user);
   } else {
-    nav.innerHTML += '<a href="/login.html">登入</a><a href="/register.html">註冊</a>';
+    renderMarketingNav(nav, user);
   }
 
   highlightActiveNav();
@@ -122,32 +166,4 @@ async function getCurrentUser() {
   }
 }
 
-// 右側浮動社群 icon + 回頂部按鈕，比照 volunfittc.com.tw 的做法，所有
-// 頁面共用同一份（position:fixed 不需要放在特定 HTML 位置，直接掛到
-// document.body 尾端即可）。連結目前都是佔位用的 #，等有真實的
-// LINE/FB/IG 帳號再換掉 href。
-function renderFloatingExtras() {
-  const dock = document.createElement("div");
-  dock.className = "floating-dock";
-  dock.innerHTML = `
-    <a href="#" class="dock-icon dock-line" title="LINE">💬</a>
-    <a href="#" class="dock-icon dock-fb" title="Facebook">📘</a>
-    <a href="#" class="dock-icon dock-ig" title="Instagram">📷</a>
-    <a href="/book.html" class="dock-icon dock-book" title="立即預約">📅</a>
-  `;
-  document.body.appendChild(dock);
-
-  const topBtn = document.createElement("button");
-  topBtn.type = "button";
-  topBtn.className = "back-to-top";
-  topBtn.textContent = "↑ TOP";
-  topBtn.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
-  document.body.appendChild(topBtn);
-
-  const toggleTopBtn = () => topBtn.classList.toggle("show", window.scrollY > 400);
-  window.addEventListener("scroll", toggleTopBtn, { passive: true });
-  toggleTopBtn();
-}
-
 document.addEventListener("DOMContentLoaded", renderNav);
-document.addEventListener("DOMContentLoaded", renderFloatingExtras);
