@@ -47,10 +47,11 @@ h1 {
 
 /* 首頁封面：動感運動風（深色底 + 亮黃重點色，大字體標語 + 斜角色塊） */
 :root {
-  --sport-navy: #12172b;
-  --sport-navy-light: #1e2648;
-  --sport-accent: #f5d90a;
-  --sport-muted: #c7cbe0;
+  /* 顏色比照 volunfittc.com.tw 的實際配色：黑＋橘，不是藍＋黃 */
+  --sport-navy: #121212;
+  --sport-navy-light: #1e1e1e;
+  --sport-accent: #f0801f;
+  --sport-muted: #c2c2c2;
 }
 
 /* 首頁 <main> 要讓 hero 區塊滿版撐出去，這裡不能繼續套用共用的
@@ -146,7 +147,7 @@ body {
   top: 50%;
   width: 124%;
   height: 70px;
-  background: radial-gradient(ellipse at left, rgba(245, 217, 10, 0.5), transparent 70%);
+  background: radial-gradient(ellipse at left, rgba(240, 128, 31, 0.55), transparent 70%);
   transform: translateY(-50%) rotate(-6deg);
   z-index: -1;
   filter: blur(2px);
@@ -194,7 +195,7 @@ body {
 }
 
 .cta-bar-secondary {
-  border-left-color: #fff;
+  border-left-color: #6b6b6b;
   background: rgba(255, 255, 255, 0.05);
 }
 
@@ -418,7 +419,7 @@ body {
   align-items: center;
   justify-content: center;
   font-size: 22px;
-  background: linear-gradient(160deg, #2a3364, #3d4a8a);
+  background: linear-gradient(160deg, #2a2a2a, #3d3d3d);
   color: var(--sport-muted);
 }
 
@@ -433,9 +434,57 @@ body {
   top: -20px;
   bottom: -20px;
   width: 160px;
-  background-image: radial-gradient(rgba(245, 217, 10, 0.45) 1.5px, transparent 1.5px);
+  background-image: radial-gradient(rgba(240, 128, 31, 0.45) 1.5px, transparent 1.5px);
   background-size: 10px 10px;
   z-index: 1;
+}
+
+/* 斜紋警示條紋裝飾，比照原網站 hero 底部的黑橘斜紋 */
+.stripe-decor {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 2;
+  height: 14px;
+  background: repeating-linear-gradient(
+    -45deg,
+    var(--sport-accent),
+    var(--sport-accent) 14px,
+    #000 14px,
+    #000 28px
+  );
+}
+
+/* hero 裡的圓形旋轉徽章，比照原網站標語旁邊的旋轉印章文字 */
+.hero-badge {
+  position: absolute;
+  top: -8px;
+  right: 0;
+  width: 92px;
+  height: 92px;
+  color: var(--sport-accent);
+  z-index: 3;
+}
+
+.hero-badge-svg {
+  width: 100%;
+  height: 100%;
+  animation: hero-badge-spin 14s linear infinite;
+}
+
+.hero-badge-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 22px;
+}
+
+@keyframes hero-badge-spin {
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 /* 右側浮動社群 icon + 回頂部按鈕，所有頁面共用（見 common.js） */
@@ -950,5 +999,9 @@ button:disabled {
     width: 38px;
     height: 38px;
     font-size: 16px;
+  }
+
+  .hero-badge {
+    display: none; /* 窄螢幕空間有限，旋轉徽章容易跟標語文字疊在一起 */
   }
 }
