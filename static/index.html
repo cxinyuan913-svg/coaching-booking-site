@@ -11,21 +11,34 @@
 </head>
 <body>
   <nav class="topnav" id="topnav"></nav>
-  <main>
+  <main class="home-main">
     <!--
       這整頁都是佔位內容（用【】標起來），還沒放教練真實的介紹跟照片。
-      等內容確定後，把下面標記的地方換成真的文字/圖片即可，版面不用動：
-      - .hero-photo-block 裡面換成 <img src="真實照片路徑" alt="教練姓名" />
-      - .stat-number 換成真實數字
+      等內容確定後換掉：
+      - .hero-photo 跟 .about-photo 的 background-image 換成真實照片網址
+      - .stat-number、【】文字換成真實內容
+      版面設計參考 volunfittc.com.tw：滿版照片 hero + 深色遮罩、粗體大
+      標語配發光色帶、拱門照片框、左色條+icon 的長條 CTA 按鈕。
     -->
     <section class="hero-sporty">
+      <div class="hero-photo hero-photo-placeholder">
+        <span>【教練動態照片，建議橫幅尺寸，例如打球動作照】</span>
+      </div>
+      <div class="hero-overlay"></div>
       <div class="hero-content">
         <p class="hero-eyebrow">【專業羽球教練】</p>
-        <h1>【教練姓名】</h1>
+        <h1 class="hero-headline">
+          【教練姓名】<br />
+          <span class="hero-glow">陪你打出實力</span>
+        </h1>
+        <p class="hero-tagline-en">Choose to improve — that's coaching with 【教練姓名】.</p>
         <p class="hero-tagline">【一句話招牌介紹，例如：陪你從零基礎打到能上場比賽】</p>
-        <a href="/book.html" class="cta-button cta-sporty">立即預約</a>
+        <a href="/book.html" class="cta-bar">
+          <span class="cta-bar-icon">🏸</span>
+          <span>立即預約</span>
+          <span class="cta-bar-arrow">→</span>
+        </a>
       </div>
-      <div class="hero-photo-block">🏸<br />（教練照片）</div>
     </section>
 
     <div class="stats-row">
@@ -43,26 +56,38 @@
       </div>
     </div>
 
-    <section class="section-block">
-      <h2>關於教練</h2>
-      <p>
-        【自我介紹：教學經歷、教學風格、為什麼想教球……這段是佔位文字，
-        請換成真實內容。】
-      </p>
-    </section>
-
-    <section class="section-block">
-      <h2>教學亮點</h2>
-      <ul class="highlight-list">
-        <li>【例如：X 年教學經驗】</li>
-        <li>【例如：OO 協會認證教練】</li>
-        <li>【例如：帶過從新手到能上場比賽的學生】</li>
-      </ul>
+    <section class="about-split">
+      <div class="about-photo about-photo-placeholder">
+        <span>【教練人像照】</span>
+      </div>
+      <div class="about-text">
+        <h2>關於教練</h2>
+        <p>
+          【自我介紹：教學經歷、教學風格、為什麼想教球……這段是佔位文字，
+          請換成真實內容。】
+        </p>
+        <ul class="highlight-list">
+          <li>【例如：X 年教學經驗】</li>
+          <li>【例如：OO 協會認證教練】</li>
+          <li>【例如：帶過從新手到能上場比賽的學生】</li>
+        </ul>
+      </div>
     </section>
 
     <section class="cta-banner">
       <h2>準備好開始了嗎？</h2>
-      <a href="/book.html" class="cta-button cta-sporty">查看開放時段</a>
+      <div class="cta-banner-actions">
+        <a href="/book.html" class="cta-bar">
+          <span class="cta-bar-icon">📅</span>
+          <span>查看開放時段</span>
+          <span class="cta-bar-arrow">→</span>
+        </a>
+        <a href="#" class="cta-bar cta-bar-secondary">
+          <span class="cta-bar-icon">💬</span>
+          <span>【LINE／聯絡方式】</span>
+          <span class="cta-bar-arrow">→</span>
+        </a>
+      </div>
     </section>
   </main>
 

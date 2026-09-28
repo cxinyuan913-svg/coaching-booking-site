@@ -53,49 +53,68 @@ h1 {
   --sport-muted: #c7cbe0;
 }
 
-.cta-button {
-  display: inline-block;
-  background: #4a5cff;
-  color: #fff;
-  text-decoration: none;
-  padding: 12px 28px;
-  border-radius: 24px;
-  font-size: 15px;
-  font-weight: 700;
-  border: none;
-  cursor: pointer;
+/* 首頁 <main> 要讓 hero 區塊滿版撐出去，這裡不能繼續套用共用的
+   max-width:900px（見 .home-main .hero-sporty 的「撐滿版寬」技巧） */
+.home-main {
+  overflow: visible;
 }
 
-.cta-button:hover {
-  background: #3949e0;
+body {
+  overflow-x: hidden; /* hero 滿版用負 margin 撐出視窗寬度，避免因此多出橫向捲軸 */
 }
 
-.cta-sporty {
-  background: var(--sport-accent);
-  color: var(--sport-navy);
-}
-
-.cta-sporty:hover {
-  background: #ffe94d;
-}
-
-.hero-sporty {
-  background: linear-gradient(135deg, var(--sport-navy) 0%, var(--sport-navy-light) 100%);
-  color: #fff;
-  border-radius: 16px;
+/* hero：滿版照片＋深色漸層遮罩＋粗體大標語，設計參考 volunfittc.com.tw */
+.home-main .hero-sporty {
+  position: relative;
+  width: 100vw;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+  margin-top: 0;
+  min-height: 440px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 32px;
-  padding: 48px 40px;
-  margin-top: 8px;
   overflow: hidden;
+  color: #fff;
+}
+
+.hero-photo {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+}
+
+.hero-photo-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--sport-navy) 0%, var(--sport-navy-light) 100%);
+  color: var(--sport-muted);
+  font-size: 13px;
+  text-align: center;
+  padding: 24px;
+}
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    100deg,
+    rgba(18, 23, 43, 0.96) 0%,
+    rgba(18, 23, 43, 0.75) 45%,
+    rgba(18, 23, 43, 0.3) 100%
+  );
 }
 
 .hero-content {
-  flex: 1;
-  min-width: 0;
-  max-width: 480px;
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 64px 24px;
 }
 
 .hero-eyebrow {
@@ -107,11 +126,38 @@ h1 {
   margin: 0 0 10px;
 }
 
-.hero-sporty h1 {
+.hero-headline {
   font-size: 42px;
   font-weight: 900;
-  margin: 0 0 12px;
-  line-height: 1.15;
+  margin: 0 0 10px;
+  line-height: 1.25;
+}
+
+/* 標語裡的關鍵字後面配一道斜向發光色帶，呼應參考網站的視覺重點 */
+.hero-glow {
+  position: relative;
+  display: inline-block;
+}
+
+.hero-glow::before {
+  content: "";
+  position: absolute;
+  left: -12%;
+  top: 50%;
+  width: 124%;
+  height: 70px;
+  background: radial-gradient(ellipse at left, rgba(245, 217, 10, 0.5), transparent 70%);
+  transform: translateY(-50%) rotate(-6deg);
+  z-index: -1;
+  filter: blur(2px);
+}
+
+.hero-tagline-en {
+  color: var(--sport-accent);
+  font-weight: 700;
+  font-style: italic;
+  font-size: 14px;
+  margin: 0 0 10px;
 }
 
 .hero-sporty .hero-tagline {
@@ -120,25 +166,36 @@ h1 {
   margin-bottom: 28px;
 }
 
-.hero-photo-block {
-  flex-shrink: 0;
-  width: 220px;
-  height: 260px;
-  clip-path: polygon(15% 0, 100% 0, 85% 100%, 0 100%);
-  background: linear-gradient(160deg, #2a3364, #3d4a8a);
-  display: flex;
+/* 長條型 CTA：左邊色條 + icon + 文字 + 箭頭，取代原本的圓角按鈕 */
+.cta-bar {
+  display: inline-flex;
   align-items: center;
-  justify-content: center;
-  color: var(--sport-muted);
-  font-size: 13px;
-  text-align: center;
-  line-height: 1.6;
+  gap: 14px;
+  background: rgba(255, 255, 255, 0.1);
+  border-left: 4px solid var(--sport-accent);
+  color: #fff;
+  text-decoration: none;
+  padding: 14px 20px;
+  font-weight: 700;
+  font-size: 15px;
 }
 
-.hero-photo-block img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+.cta-bar:hover {
+  background: rgba(255, 255, 255, 0.18);
+}
+
+.cta-bar-arrow {
+  margin-left: 12px;
+  transition: transform 0.15s ease;
+}
+
+.cta-bar:hover .cta-bar-arrow {
+  transform: translateX(4px);
+}
+
+.cta-bar-secondary {
+  border-left-color: #fff;
+  background: rgba(255, 255, 255, 0.05);
 }
 
 .stats-row {
@@ -174,6 +231,44 @@ h1 {
   line-height: 1.8;
 }
 
+/* 自我介紹：拱門造型照片（上兩角大圓角、下兩角小圓角）+ 文字並排 */
+.about-split {
+  display: flex;
+  gap: 32px;
+  align-items: center;
+  margin: 8px 0 28px;
+  flex-wrap: wrap;
+}
+
+.about-photo {
+  flex: 0 0 220px;
+  width: 220px;
+  height: 280px;
+  border-radius: 110px 110px 8px 8px;
+  background-size: cover;
+  background-position: center;
+}
+
+.about-photo-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(160deg, #dfe2ea, #c7cbe0);
+  color: #666;
+  font-size: 13px;
+  text-align: center;
+  padding: 16px;
+}
+
+.about-text {
+  flex: 1;
+  min-width: 260px;
+}
+
+.about-text h2 {
+  margin-top: 0;
+}
+
 .cta-banner {
   text-align: center;
   background: var(--sport-navy);
@@ -186,6 +281,13 @@ h1 {
 .cta-banner h2 {
   color: #fff;
   margin-bottom: 16px;
+}
+
+.cta-banner-actions {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 16px;
 }
 
 table {
@@ -559,27 +661,30 @@ button:disabled {
     text-align: center;
   }
 
-  .hero-sporty {
-    flex-direction: column;
-    padding: 32px 20px;
-    text-align: center;
-    border-radius: 12px;
-  }
-
   .hero-content {
-    max-width: 100%;
+    padding: 40px 20px;
+    text-align: center;
   }
 
-  .hero-sporty h1 {
-    font-size: 30px;
-  }
-
-  .hero-photo-block {
-    width: 160px;
-    height: 190px;
+  .hero-headline {
+    font-size: 28px;
   }
 
   .stats-row {
     gap: 20px 12px;
+  }
+
+  .about-split {
+    justify-content: center;
+    text-align: center;
+  }
+
+  .about-photo {
+    margin: 0 auto;
+  }
+
+  .cta-bar {
+    width: 100%;
+    justify-content: center;
   }
 }
