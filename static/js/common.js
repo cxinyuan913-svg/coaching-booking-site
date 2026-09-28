@@ -79,7 +79,8 @@ async function renderNav() {
     links.push(["/admin_slots.html", "開放時段管理"]);
     links.push(["/admin_requests.html", "審核申請"]);
   } else {
-    links.push(["/", "開放時段"]);
+    links.push(["/", "首頁"]);
+    links.push(["/book.html", "立即預約"]);
     if (user) links.push(["/my_bookings.html", "我的預約"]);
   }
 

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>立即預約 - 教練預約網站</title>
+  <link rel="stylesheet" href="/static/css/style.css" />
+</head>
+<body>
+  <nav class="topnav" id="topnav"></nav>
+  <main>
+    <h1>選擇時段</h1>
+    <p id="booking-success-banner" style="display: none; background: #d7f5e3; color: #1b4d2e; padding: 10px 14px; border-radius: 6px; margin-bottom: 12px">
+      申請已送出，等教練核准後就會變成正式課程，可以到「我的預約」查看狀態。
+    </p>
+
+    <div class="booking-layout">
+      <div class="calendar-card">
+        <div class="calendar-header">
+          <button type="button" class="secondary" id="cal-prev">‹</button>
+          <h2 id="cal-title"></h2>
+          <button type="button" class="secondary" id="cal-next">›</button>
+        </div>
+        <div class="calendar-weekdays">
+          <span>日</span><span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span>六</span>
+        </div>
+        <div class="calendar-grid" id="calendar-grid"></div>
+      </div>
+
+      <div id="day-slots-backdrop"></div>
+      <div class="day-slots-panel" id="day-slots-section">
+        <div class="day-slots-panel-handle"></div>
+        <div class="day-slots-panel-header">
+          <h2 id="day-slots-title">點月曆上的日期查看時段</h2>
+          <button type="button" class="secondary" id="btn-close-day-slots">✕</button>
+        </div>
+        <div class="slot-chip-list" id="day-slots-list"></div>
+      </div>
+    </div>
+
+    <p id="no-slots-hint" style="display: none; color: #777">目前沒有開放的時段，晚點再來看看。</p>
+  </main>
+
+  <div class="modal-backdrop" id="booking-modal">
+    <div class="modal">
+      <h2>送出預約申請</h2>
+      <p id="booking-slot-summary" style="color: #555"></p>
+      <div class="form-row">
+        <label for="f-note">給教練的備註（選填）</label>
+        <textarea id="f-note" rows="3"></textarea>
+      </div>
+      <p class="error-text" id="booking-error" style="display: none"></p>
+      <div class="modal-actions">
+        <button type="button" class="secondary" id="btn-cancel-booking">取消</button>
+        <button type="button" id="btn-submit-booking">送出申請</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="/static/js/common.js"></script>
+  <script src="/static/js/book.js"></script>
+</body>
+</html>

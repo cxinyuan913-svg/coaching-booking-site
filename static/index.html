@@ -3,52 +3,45 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>開放時段 - 教練預約網站</title>
+  <title>教練預約網站</title>
   <link rel="stylesheet" href="/static/css/style.css" />
 </head>
 <body>
   <nav class="topnav" id="topnav"></nav>
   <main>
-    <h1>目前開放的時段</h1>
-    <p id="booking-success-banner" style="display: none; background: #d7f5e3; color: #1b4d2e; padding: 10px 14px; border-radius: 6px; margin-bottom: 12px">
-      申請已送出，等教練核准後就會變成正式課程，可以到「我的預約」查看狀態。
-    </p>
-    <div class="calendar-card">
-      <div class="calendar-header">
-        <button type="button" class="secondary" id="cal-prev">‹</button>
-        <h2 id="cal-title"></h2>
-        <button type="button" class="secondary" id="cal-next">›</button>
-      </div>
-      <div class="calendar-weekdays">
-        <span>日</span><span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span>六</span>
-      </div>
-      <div class="calendar-grid" id="calendar-grid"></div>
-    </div>
+    <!--
+      這整頁都是佔位內容（用【】標起來），還沒放教練真實的介紹跟照片。
+      等內容確定後，把下面標記的地方換成真的文字/圖片即可，版面不用動。
+    -->
+    <section class="hero">
+      <div class="hero-avatar-placeholder">照片</div>
+      <h1>【教練姓名】</h1>
+      <p class="hero-tagline">【一句話招牌介紹，例如：陪你從零基礎打到能上場比賽】</p>
+      <a href="/book.html" class="cta-button">立即預約</a>
+    </section>
 
-    <div class="section-block" id="day-slots-section" style="display: none">
-      <h2 id="day-slots-title"></h2>
-      <div class="slot-chip-list" id="day-slots-list"></div>
-    </div>
-    <p id="no-slots-hint" style="display: none; color: #777">目前沒有開放的時段，晚點再來看看。</p>
+    <section class="section-block">
+      <h2>關於教練</h2>
+      <p>
+        【自我介紹：教學經歷、教學風格、為什麼想教球……這段是佔位文字，
+        請換成真實內容。】
+      </p>
+    </section>
+
+    <section class="section-block">
+      <h2>教學亮點</h2>
+      <ul class="highlight-list">
+        <li>【例如：X 年教學經驗】</li>
+        <li>【例如：OO 協會認證教練】</li>
+        <li>【例如：帶過從新手到能上場比賽的學生】</li>
+      </ul>
+    </section>
+
+    <section class="section-block" style="text-align: center">
+      <a href="/book.html" class="cta-button">查看開放時段</a>
+    </section>
   </main>
 
-  <div class="modal-backdrop" id="booking-modal">
-    <div class="modal">
-      <h2>送出預約申請</h2>
-      <p id="booking-slot-summary" style="color: #555"></p>
-      <div class="form-row">
-        <label for="f-note">給教練的備註（選填）</label>
-        <textarea id="f-note" rows="3"></textarea>
-      </div>
-      <p class="error-text" id="booking-error" style="display: none"></p>
-      <div class="modal-actions">
-        <button type="button" class="secondary" id="btn-cancel-booking">取消</button>
-        <button type="button" id="btn-submit-booking">送出申請</button>
-      </div>
-    </div>
-  </div>
-
   <script src="/static/js/common.js"></script>
-  <script src="/static/js/slots.js"></script>
 </body>
 </html>

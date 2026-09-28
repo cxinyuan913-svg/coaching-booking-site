@@ -45,6 +45,56 @@ h1 {
   margin-bottom: 16px;
 }
 
+/* 首頁封面（教練自我介紹） */
+.hero {
+  text-align: center;
+  padding: 48px 16px 40px;
+}
+
+.hero-avatar-placeholder {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: #dfe2ea;
+  color: #888;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 20px;
+}
+
+.hero h1 {
+  font-size: 28px;
+  margin-bottom: 8px;
+}
+
+.hero-tagline {
+  color: #555;
+  font-size: 15px;
+  margin-bottom: 24px;
+}
+
+.cta-button {
+  display: inline-block;
+  background: #4a5cff;
+  color: #fff;
+  text-decoration: none;
+  padding: 12px 28px;
+  border-radius: 24px;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.cta-button:hover {
+  background: #3949e0;
+}
+
+.highlight-list {
+  padding-left: 20px;
+  line-height: 1.8;
+}
+
 table {
   width: 100%;
   border-collapse: collapse;
@@ -256,6 +306,99 @@ button:disabled {
 .slot-chip:hover {
   border-color: #4a5cff;
   color: #4a5cff;
+}
+
+/* 選日期後的時段面板：手機是從底部滑出的 bottom sheet（蓋在月曆上面，
+   不用捲動頁面就看得到），桌面／平板夠寬時改成月曆右邊的固定側欄，
+   兩者同時顯示。切換由下面兩個 @media 決定，JS 只負責加/拿掉 .open。 */
+.booking-layout {
+  position: relative;
+}
+
+#day-slots-backdrop {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 40;
+}
+
+#day-slots-backdrop.show {
+  display: block;
+}
+
+.day-slots-panel {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #fff;
+  border-radius: 16px 16px 0 0;
+  box-shadow: 0 -2px 16px rgba(0, 0, 0, 0.18);
+  padding: 8px 16px 20px;
+  max-height: 65vh;
+  overflow-y: auto;
+  z-index: 50;
+  transform: translateY(100%);
+  transition: transform 0.25s ease;
+}
+
+.day-slots-panel.open {
+  transform: translateY(0);
+}
+
+.day-slots-panel-handle {
+  width: 40px;
+  height: 4px;
+  border-radius: 2px;
+  background: #ddd;
+  margin: 6px auto 12px;
+}
+
+.day-slots-panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.day-slots-panel-header h2 {
+  font-size: 16px;
+  margin: 0;
+}
+
+/* 畫面夠寬（平板橫向／桌機）：月曆＋時段面板並排，都常駐顯示，不用點按才出現 */
+@media (min-width: 700px) {
+  .booking-layout {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+  }
+
+  .calendar-card {
+    flex: 1;
+    margin-bottom: 0;
+  }
+
+  #day-slots-backdrop {
+    display: none !important;
+  }
+
+  .day-slots-panel {
+    position: static;
+    transform: none;
+    flex: 1;
+    max-height: none;
+    overflow: visible;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    padding: 16px;
+  }
+
+  .day-slots-panel-handle,
+  #btn-close-day-slots {
+    display: none;
+  }
 }
 
 /* Modal（confirmDialog 用） */

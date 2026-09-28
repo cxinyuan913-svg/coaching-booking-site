@@ -1,5 +1,10 @@
 // 月曆選日期 + 當天時段列表（Calendly 風格）。開放時段通常不多，一次把
 // 全部開放時段抓回來、在前端依日期分組，不用另外做伺服器端分月查詢。
+//
+// 時段面板在窄螢幕是蓋在月曆上面的 bottom sheet（見 style.css），選日期
+// 後直接 openDaySlotsPanel() 滑出來，不用捲動頁面就看得到；畫面夠寬時
+// CSS 會把它變成月曆旁邊常駐的側欄，openDaySlotsPanel／closeDaySlotsPanel
+// 加減 .open class 對側欄沒有視覺影響，兩種版面共用同一套 JS 邏輯。
 
 let slotsByDate = {}; // { "2026-11-02": [slot, ...] }
 let currentUser = null;
@@ -51,19 +56,28 @@ function renderCalendar() {
   }
 }
 
+function openDaySlotsPanel() {
+  document.getElementById("day-slots-section").classList.add("open");
+  document.getElementById("day-slots-backdrop").classList.add("show");
+}
+
+function closeDaySlotsPanel() {
+  document.getElementById("day-slots-section").classList.remove("open");
+  document.getElementById("day-slots-backdrop").classList.remove("show");
+}
+
 function selectDate(dateStr) {
   selectedDate = dateStr;
   renderCalendar();
   renderDaySlots();
+  openDaySlotsPanel();
 }
 
 function renderDaySlots() {
-  const section = document.getElementById("day-slots-section");
   const title = document.getElementById("day-slots-title");
   const list = document.getElementById("day-slots-list");
   const slots = slotsByDate[selectedDate] || [];
 
-  section.style.display = "";
   title.textContent = `${selectedDate} 的開放時段`;
   list.innerHTML = slots
     .map(
@@ -81,7 +95,7 @@ async function loadSlots() {
 
   if (Object.keys(slotsByDate).length === 0) {
     document.getElementById("no-slots-hint").style.display = "";
-    document.querySelector(".calendar-card").style.display = "none";
+    document.querySelector(".booking-layout").style.display = "none";
     return;
   }
 
@@ -120,13 +134,9 @@ async function submitBooking() {
       student_note: document.getElementById("f-note").value.trim() || null,
     });
     closeBookingModal();
+    closeDaySlotsPanel();
     document.getElementById("booking-success-banner").style.display = "";
     await loadSlots();
-    if (selectedDate && slotsByDate[selectedDate]) {
-      renderDaySlots();
-    } else {
-      document.getElementById("day-slots-section").style.display = "none";
-    }
   } catch (err) {
     errorEl.textContent = err.message;
     errorEl.style.display = "";
@@ -152,6 +162,9 @@ document.getElementById("cal-next").addEventListener("click", () => {
   currentMonth = new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1, 1);
   renderCalendar();
 });
+
+document.getElementById("btn-close-day-slots").addEventListener("click", closeDaySlotsPanel);
+document.getElementById("day-slots-backdrop").addEventListener("click", closeDaySlotsPanel);
 
 document.getElementById("btn-cancel-booking").addEventListener("click", closeBookingModal);
 document.getElementById("btn-submit-booking").addEventListener("click", submitBooking);
