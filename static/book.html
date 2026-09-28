@@ -3,59 +3,129 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>立即預約 - 教練預約網站</title>
+  <title>立即預約 - Raymond 羽球教室</title>
   <link rel="stylesheet" href="/static/css/style.css" />
 </head>
 <body>
   <nav class="topnav" id="topnav"></nav>
-  <main>
-    <h1>選擇時段</h1>
-    <p id="booking-success-banner" style="display: none; background: #d7f5e3; color: #1b4d2e; padding: 10px 14px; border-radius: 6px; margin-bottom: 12px">
-      申請已送出，等教練核准後就會變成正式課程，可以到「我的預約」查看狀態。
-    </p>
 
-    <div class="booking-layout">
-      <div class="calendar-card">
-        <div class="calendar-header">
-          <button type="button" class="secondary" id="cal-prev">‹</button>
-          <h2 id="cal-title"></h2>
-          <button type="button" class="secondary" id="cal-next">›</button>
-        </div>
-        <div class="calendar-weekdays">
-          <span>日</span><span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span>六</span>
-        </div>
-        <div class="calendar-grid" id="calendar-grid"></div>
+  <main class="booking-page">
+    <div class="container">
+      <div class="booking-title">
+        <span class="eyebrow">Booking</span>
+        <h1>線上預約</h1>
       </div>
 
-      <div id="day-slots-backdrop"></div>
-      <div class="day-slots-panel" id="day-slots-section">
-        <div class="day-slots-panel-handle"></div>
-        <div class="day-slots-panel-header">
-          <h2 id="day-slots-title">點月曆上的日期查看時段</h2>
-          <button type="button" class="secondary" id="btn-close-day-slots">✕</button>
+      <!-- 送出成功後整段換成這個，見 book.js -->
+      <div class="card booking-success" id="booking-success" style="display: none">
+        <div class="success-icon">✓</div>
+        <h2>申請已送出！</h2>
+        <p style="color: var(--ink-2)">
+          等教練核准後就會變成正式課程，可以到「我的預約」查看狀態。
+        </p>
+        <button type="button" class="btn btn-primary" id="btn-book-again" style="margin-top: 16px">
+          再預約一堂
+        </button>
+      </div>
+
+      <div class="grid-12 booking-layout-grid" id="booking-form-wrap">
+        <div class="booking-form-col">
+          <!-- Step 1：選課程 -->
+          <div class="card booking-step">
+            <div class="booking-step-title">
+              <span class="step-no">01</span>
+              <h2>選擇課程</h2>
+            </div>
+            <div class="course-select-grid" id="course-select-grid">
+              <p style="color: var(--ink-3)">課程資料載入中…</p>
+            </div>
+          </div>
+
+          <!-- Step 2：選日期 -->
+          <div class="card booking-step">
+            <div class="booking-step-title">
+              <span class="step-no">02</span>
+              <h2>選擇日期</h2>
+            </div>
+            <div class="date-week-strip">
+              <button type="button" class="date-week-nav" id="week-prev" aria-label="上一週">‹</button>
+              <div class="date-week-days" id="date-week-days"></div>
+              <button type="button" class="date-week-nav" id="week-next" aria-label="下一週">›</button>
+            </div>
+          </div>
+
+          <!-- Step 3：選時段 -->
+          <div class="card booking-step">
+            <div class="booking-step-title">
+              <span class="step-no">03</span>
+              <h2>選擇時段</h2>
+            </div>
+            <p class="slot-time-hint" id="slot-time-hint">請先選課程與日期</p>
+            <div class="slot-time-grid" id="slot-time-grid"></div>
+          </div>
+
+          <!-- Step 4：聯絡資料。姓名/電話沿用帳號註冊資料，這裡只收「這次預約」才需要的資訊 -->
+          <div class="card booking-step">
+            <div class="booking-step-title">
+              <span class="step-no">04</span>
+              <h2>聯絡資料</h2>
+            </div>
+            <p style="color: var(--ink-3); font-size: 13px; margin: 0 0 12px" id="account-hint">
+              聯絡資訊將使用您註冊時填寫的姓名與電話；尚未登入的話，送出申請時會先導向登入頁。
+            </p>
+            <div class="form-row">
+              <label for="f-level">目前程度</label>
+              <select id="f-level">
+                <option value="">請選擇</option>
+                <option value="完全新手">完全新手</option>
+                <option value="初學者">初學者（會基本動作）</option>
+                <option value="有點基礎">有點基礎（打過一陣子）</option>
+                <option value="進階">進階（能上場比賽）</option>
+              </select>
+            </div>
+            <div class="form-row">
+              <label for="f-focus">想加強的地方（選填）</label>
+              <textarea id="f-focus" rows="3" placeholder="例如：正手高遠球、腳步、雙打站位…"></textarea>
+            </div>
+            <div class="form-row">
+              <label for="f-note">給教練的備註（選填，例如 LINE ID）</label>
+              <textarea id="f-note" rows="2"></textarea>
+            </div>
+            <p class="error-text" id="booking-error" style="display: none"></p>
+          </div>
         </div>
-        <div class="slot-chip-list" id="day-slots-list"></div>
+
+        <div class="booking-summary-col">
+          <div class="card booking-summary-card">
+            <h3>預約明細</h3>
+            <div class="summary-row">
+              <span>課程</span>
+              <span class="val placeholder" id="summary-course">尚未選擇</span>
+            </div>
+            <div class="summary-row">
+              <span>日期</span>
+              <span class="val placeholder" id="summary-date">尚未選擇</span>
+            </div>
+            <div class="summary-row">
+              <span>時段</span>
+              <span class="val placeholder" id="summary-time">尚未選擇</span>
+            </div>
+            <div class="summary-row">
+              <span>場地</span>
+              <span class="val placeholder" id="summary-venue">尚未選擇</span>
+            </div>
+            <div class="summary-row" style="border-bottom: none">
+              <span>費用</span>
+              <span class="summary-price" id="summary-price">--</span>
+            </div>
+            <button type="button" class="btn btn-primary btn-block" id="btn-submit-booking" disabled>
+              送出預約申請
+            </button>
+          </div>
+        </div>
       </div>
     </div>
-
-    <p id="no-slots-hint" style="display: none; color: #777">目前沒有開放的時段，晚點再來看看。</p>
   </main>
-
-  <div class="modal-backdrop" id="booking-modal">
-    <div class="modal">
-      <h2>送出預約申請</h2>
-      <p id="booking-slot-summary" style="color: #555"></p>
-      <div class="form-row">
-        <label for="f-note">給教練的備註（選填）</label>
-        <textarea id="f-note" rows="3"></textarea>
-      </div>
-      <p class="error-text" id="booking-error" style="display: none"></p>
-      <div class="modal-actions">
-        <button type="button" class="secondary" id="btn-cancel-booking">取消</button>
-        <button type="button" id="btn-submit-booking">送出申請</button>
-      </div>
-    </div>
-  </div>
 
   <script src="/static/js/common.js"></script>
   <script src="/static/js/book.js"></script>

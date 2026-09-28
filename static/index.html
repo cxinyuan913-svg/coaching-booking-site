@@ -3,159 +3,246 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>教練預約網站</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700;900&display=swap" rel="stylesheet" />
+  <title>Raymond 羽球教室 - 陪你打出屬於你的球風</title>
   <link rel="stylesheet" href="/static/css/style.css" />
 </head>
 <body>
   <nav class="topnav" id="topnav"></nav>
-  <main class="home-main">
-    <!--
-      整頁版面完整比照 volunfittc.com.tw 的區塊順序跟視覺手法（滿版照片
-      hero、大字標語配發光色帶、分類選單、Online Booking 區塊配照片拼貼
-      +halftone 網點裝飾、拱門照片框、滿版深色 footer、右側浮動社群
-      icon、回頂部按鈕——後兩者在 common.js 統一注入、所有頁面共用），
-      內容跟功能全部換成我們自己的預約系統。
 
-      這整頁都是佔位內容（用【】標起來），還沒放教練真實的介紹跟照片，
-      也還沒有真實的社群/聯絡資訊。等內容確定後換掉：
-      - .hero-photo、.about-photo、.collage-item 的佔位方塊換成真實照片
-      - 【】文字換成真實內容
-      - common.js 的 floating-dock 連結、footer 的聯絡資訊換成真實的
-    -->
-    <section class="hero-sporty">
-      <div class="hero-photo hero-photo-placeholder">
-        <span>【教練動態照片，建議橫幅尺寸，例如打球動作照】</span>
-      </div>
-      <div class="hero-overlay"></div>
-      <div class="hero-content">
-        <div class="hero-badge">
-          <svg viewBox="0 0 120 120" class="hero-badge-svg">
-            <defs>
-              <path id="hero-badge-path" d="M 60,60 m -48,0 a 48,48 0 1,1 96,0 a 48,48 0 1,1 -96,0" />
-            </defs>
-            <text font-size="11" fill="currentColor" letter-spacing="2">
-              <textPath href="#hero-badge-path">【教練姓名】・羽球教學・</textPath>
-            </text>
-          </svg>
-          <span class="hero-badge-center">🏸</span>
+  <main>
+    <!-- Hero：左7欄文字、右5欄直式照片。照片先用佔位框，之後換成真實動態照 -->
+    <section class="hero on-dark">
+      <div class="container grid-12">
+        <div class="hero-copy">
+          <span class="eyebrow">Professional Badminton Coaching</span>
+          <h1>陪你打出，<br />屬於你的球風。</h1>
+          <p>
+            我是 Raymond，2017～2024 年效力臺灣土地銀行羽球隊，主攻男子雙打，
+            世界排名最高來到第 45 名，並拿下高雄大師賽男雙冠軍。退役後全職投入
+            教學，把場上累積的經驗，轉化成你聽得懂、用得上的訓練內容。
+          </p>
+          <div class="hero-actions">
+            <a href="/book.html" class="btn btn-primary">立即預約體驗課</a>
+            <a href="#about" class="btn btn-outline">了解教練經歷</a>
+          </div>
         </div>
-        <p class="hero-eyebrow">【專業羽球教練】</p>
-        <h1 class="hero-headline">
-          【教練姓名】<br />
-          <span class="hero-glow">陪你打出實力</span>
-        </h1>
-        <p class="hero-tagline-en">Choose to improve — that's coaching with 【教練姓名】.</p>
-        <p class="hero-tagline">【一句話招牌介紹，例如：陪你從零基礎打到能上場比賽】</p>
-        <a href="/book.html" class="cta-bar">
-          <span class="cta-bar-icon">🏸</span>
-          <span>立即預約</span>
-          <span class="cta-bar-arrow">→</span>
-        </a>
-      </div>
-      <div class="stripe-decor"></div>
-    </section>
-
-    <!-- 對應原網站的「JOIN US, JOIN VOLUNFIT!」巨大斜體標語衝擊區塊 -->
-    <section class="impact-banner">
-      <div class="impact-glow-bar"></div>
-      <h2 class="impact-headline">加入我們，打出不一樣的你！</h2>
-      <p class="impact-subtitle">
-        【一句話：不管是零基礎想入門，還是想加強技術準備比賽，都歡迎預約體驗。】
-      </p>
-    </section>
-
-    <div class="stats-row">
-      <div class="stat-item">
-        <span class="stat-number">【8】</span>
-        <span class="stat-label">年教學經驗</span>
-      </div>
-      <div class="stat-item">
-        <span class="stat-number">【100+】</span>
-        <span class="stat-label">學員教過</span>
-      </div>
-      <div class="stat-item">
-        <span class="stat-number">【OO】</span>
-        <span class="stat-label">認證教練</span>
-      </div>
-    </div>
-
-    <!-- 對應原網站的「教練課程/週期專班/小班團課/客製包班」分類選單 -->
-    <section class="category-tabs">
-      <div class="category-tab">
-        <div class="category-tab-icon">🏸</div>
-        <span>單堂體驗</span>
-      </div>
-      <div class="category-tab">
-        <div class="category-tab-icon">📆</div>
-        <span>固定班</span>
-      </div>
-      <div class="category-tab">
-        <div class="category-tab-icon">🎯</div>
-        <span>加強訓練</span>
-      </div>
-      <div class="category-tab">
-        <div class="category-tab-icon">👥</div>
-        <span>包班教學</span>
+        <div class="hero-photo-wrap">
+          <div class="hero-photo">
+            <span>【教練動態照片，建議直式 3:4，例如比賽或練球畫面】</span>
+          </div>
+          <div class="hero-photo-badge">
+            <strong>高雄大師賽</strong>
+            男子雙打 冠軍
+          </div>
+        </div>
       </div>
     </section>
 
-    <section class="about-split">
-      <div class="about-photo about-photo-placeholder">
-        <span>【教練人像照】</span>
+    <!-- 數據列 -->
+    <section class="stats-bar">
+      <div class="container grid-12">
+        <div class="stat-item">
+          <span class="stat-number">No.45</span>
+          <span class="stat-label">BWF 男雙世界排名最高</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-number">冠軍</span>
+          <span class="stat-label">高雄大師賽 男子雙打</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-number">8 年</span>
+          <span class="stat-label">臺灣土地銀行職業選手（2017–2024）</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-number">【 】</span>
+          <span class="stat-label">教學學員人數</span>
+        </div>
       </div>
-      <div class="about-text">
-        <h2>關於教練</h2>
-        <p>
-          【自我介紹：教學經歷、教學風格、為什麼想教球……這段是佔位文字，
-          請換成真實內容。】
+    </section>
+
+    <!-- 標語區 -->
+    <section class="section" id="tagline">
+      <div class="container grid-12">
+        <p class="tagline-copy">選擇進步，就是選擇跟對教練一起練。</p>
+        <p class="tagline-detail">
+          不管你是完全沒碰過球拍的新手，還是想加強戰術、準備比賽的進階球友，
+          都可以從一堂體驗課開始。我會先了解你目前的狀況與目標，再安排合適
+          的訓練內容，陪你一步步打出屬於自己的球風。
         </p>
-        <ul class="highlight-list">
-          <li>【例如：X 年教學經驗】</li>
-          <li>【例如：OO 協會認證教練】</li>
-          <li>【例如：帶過從新手到能上場比賽的學生】</li>
-        </ul>
       </div>
     </section>
 
-    <!-- 對應原網站的「ONLINE BOOKING / 預約方式」區塊：照片拼貼 + halftone 網點裝飾 -->
-    <section class="booking-showcase">
-      <div class="halftone-decor"></div>
-      <div class="booking-showcase-text">
-        <h2>ONLINE BOOKING</h2>
-        <p class="booking-showcase-sub">預約方式</p>
-        <div class="cta-banner-actions">
-          <a href="/book.html" class="cta-bar">
-            <span class="cta-bar-icon">📅</span>
-            <span>查看開放時段</span>
-            <span class="cta-bar-arrow">→</span>
-          </a>
-          <a href="#" class="cta-bar cta-bar-secondary">
-            <span class="cta-bar-icon">💬</span>
-            <span>【LINE／聯絡方式】</span>
-            <span class="cta-bar-arrow">→</span>
-          </a>
+    <!-- 課程介紹：4 張卡，資料來自 GET /api/courses，不寫死 HTML -->
+    <section class="section on-paper-2" id="course">
+      <div class="container">
+        <span class="eyebrow">Course</span>
+        <h2>課程介紹</h2>
+        <div class="grid-12 course-grid" id="course-grid">
+          <p style="color: var(--ink-3)">課程資料載入中…</p>
         </div>
       </div>
-      <div class="booking-collage">
-        <div class="collage-item collage-item-lg">🏸</div>
-        <div class="collage-item">📸</div>
-        <div class="collage-item">📸</div>
-        <div class="collage-item">📸</div>
+    </section>
+
+    <!-- 教練介紹：左照片右文字，真實經歷 -->
+    <section class="section" id="about">
+      <div class="container grid-12 about-split">
+        <div class="about-photo">
+          <span>【教練人像照】</span>
+        </div>
+        <div class="about-copy">
+          <span class="eyebrow">About the Coach</span>
+          <h2>Raymond</h2>
+          <p>
+            2017～2024 年效力臺灣土地銀行羽球隊，主攻男子雙打，退役後全職投入
+            基層與個人教學。比起單純餵球，我更在意陪每位學生找到適合自己的
+            打法，從基本動作到比賽戰術都能循序漸進地累積。
+          </p>
+          <ul class="highlight-list">
+            <li>2017–2024 臺灣土地銀行羽球隊 男子雙打選手</li>
+            <li>BWF 世界羽球聯盟男雙世界排名最高第 45 名</li>
+            <li>高雄大師賽（Kaohsiung Masters）男子雙打冠軍</li>
+            <li>國立臺灣科技大學 電機工程學士</li>
+            <li>國立清華大學 通訊工程碩士</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 上課流程：4 步驟 -->
+    <section class="section on-paper-2" id="process">
+      <div class="container">
+        <span class="eyebrow">Process</span>
+        <h2>上課流程</h2>
+        <div class="grid-12" style="margin-top: 24px">
+          <div class="process-step">
+            <span class="process-step-number">01</span>
+            <h3>線上預約</h3>
+            <p>選課程、日期、時段，填寫目前程度與想加強的地方。</p>
+          </div>
+          <div class="process-step">
+            <span class="process-step-number">02</span>
+            <h3>教練確認</h3>
+            <p>依你的程度與需求確認上課內容，1 個工作天內回覆。</p>
+          </div>
+          <div class="process-step">
+            <span class="process-step-number">03</span>
+            <h3>準時上場</h3>
+            <p>到約定場地上課，教練全程依現場狀況調整訓練菜單。</p>
+          </div>
+          <div class="process-step">
+            <span class="process-step-number">04</span>
+            <h3>持續進步</h3>
+            <p>上完課可再預約下一堂，逐步安排屬於你的訓練節奏。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 預約方式：深綠圓角大卡，LINE + booking.html -->
+    <section class="section" id="booking">
+      <div class="container">
+        <div class="booking-cta-card on-dark">
+          <span class="eyebrow">Booking</span>
+          <h2>準備好開始了嗎？</h2>
+          <p style="color: #d9d5c8; max-width: 480px; margin: 0 auto">
+            線上查看開放時段直接預約，或加 LINE 先跟教練聊聊你的狀況。
+          </p>
+          <div class="booking-cta-actions">
+            <a href="/book.html" class="btn btn-primary">線上預約時段</a>
+            <a href="#" class="btn btn-outline">加 LINE 詢問</a>
+          </div>
+          <p class="booking-cta-line-id">LINE ID：【LINE ID】</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 上課場地：2 張卡 -->
+    <section class="section" id="venue">
+      <div class="container">
+        <span class="eyebrow">Venue</span>
+        <h2>上課場地</h2>
+        <div class="grid-12" style="margin-top: 24px">
+          <div class="venue-card card">
+            <div class="venue-card-photo"><span>【場地照片】</span></div>
+            <div class="venue-card-body">
+              <h3>【常用場地一】</h3>
+              <p>【地址】</p>
+              <p>【場地特色說明，例如：地板材質、附近停車資訊】</p>
+              <a href="#">查看地圖 →</a>
+            </div>
+          </div>
+          <div class="venue-card card">
+            <div class="venue-card-photo"><span>【場地照片】</span></div>
+            <div class="venue-card-body">
+              <h3>【常用場地二】</h3>
+              <p>【地址】</p>
+              <p>【場地特色說明】</p>
+              <a href="#">查看地圖 →</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="section on-paper-2" id="faq">
+      <div class="container" style="max-width: 800px">
+        <span class="eyebrow">FAQ</span>
+        <h2>常見問題</h2>
+        <details class="faq-item">
+          <summary>完全沒有基礎可以上課嗎？</summary>
+          <p>可以，第一堂體驗課會先了解你的狀況，從最基本的動作開始教起。</p>
+        </details>
+        <details class="faq-item">
+          <summary>需要自備球拍、羽球嗎？</summary>
+          <p>建議自備球拍；羽球部分請上課前跟教練確認，一般會協調共同分攤。</p>
+        </details>
+        <details class="faq-item">
+          <summary>可以取消或改期嗎？</summary>
+          <p>可以，請盡早透過 LINE 或「我的預約」聯繫教練協調新時段。</p>
+        </details>
+        <details class="faq-item">
+          <summary>可以兩人以上一起上課嗎？</summary>
+          <p>可以，預約時在備註或聯絡教練說明人數，會依人數調整訓練菜單。</p>
+        </details>
+        <details class="faq-item">
+          <summary>上課地點在哪裡？</summary>
+          <p>目前固定場地請見上方「上課場地」區塊，也可以另外約定地點。</p>
+        </details>
       </div>
     </section>
   </main>
 
   <footer class="site-footer">
-    <div class="footer-brand">【教練姓名】羽球教學</div>
-    <p>📞 【聯絡電話】</p>
-    <p>✉️ 【Email】</p>
-    <p>📍 【常用場地地址】</p>
-    <p>🕒 【服務時間，例如：週一至週五 18:00-22:00】</p>
+    <div class="container grid-12">
+      <div class="footer-col" style="grid-column: span 4">
+        <h4>Raymond 羽球教室</h4>
+        <p>前臺灣土地銀行男子雙打選手，陪你打出屬於你的球風。</p>
+      </div>
+      <div class="footer-col" style="grid-column: span 4">
+        <h4>聯絡方式</h4>
+        <p>LINE：【LINE ID】</p>
+        <p>Email：【Email】</p>
+      </div>
+      <div class="footer-col" style="grid-column: span 4">
+        <h4>快速連結</h4>
+        <p><a href="/book.html" style="color: inherit">線上預約</a></p>
+        <p><a href="#faq" style="color: inherit">常見問題</a></p>
+      </div>
+    </div>
+    <div class="container footer-bottom">
+      <span>© 2026 Raymond 羽球教室</span>
+      <span>【服務時間，例如：週一至週五 18:00–22:00】</span>
+    </div>
   </footer>
 
+  <!-- 手機版底部固定操作列 -->
+  <div class="mobile-action-bar">
+    <a href="#" class="btn btn-outline-dark">LINE 詢問</a>
+    <a href="/book.html" class="btn btn-primary">預約體驗課</a>
+  </div>
+
   <script src="/static/js/common.js"></script>
+  <script src="/static/js/index.js"></script>
 </body>
 </html>

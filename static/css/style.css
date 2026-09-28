@@ -491,6 +491,776 @@ button:disabled {
   margin-top: 16px;
 }
 
+/* ================= 首頁專用元件 ================= */
+
+.section {
+  padding: 72px 0;
+}
+
+.section.on-dark {
+  background: var(--green-900);
+  color: #fff;
+}
+
+.section.on-paper-2 {
+  background: var(--paper-2);
+}
+
+/* ---- Hero：左7欄文字、右5欄直式照片 ---- */
+.hero {
+  background: var(--green-900);
+  color: #fff;
+  padding: 56px 0 0;
+  overflow: hidden;
+}
+
+.hero .grid-12 {
+  align-items: center;
+}
+
+.hero-copy {
+  grid-column: span 7;
+}
+
+.hero-copy h1 {
+  font-size: 44px;
+  line-height: 1.3;
+  margin: 4px 0 16px;
+}
+
+.hero-copy p {
+  color: #d9d5c8;
+  font-size: 16px;
+  line-height: 1.8;
+  max-width: 520px;
+  margin: 0 0 28px;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.hero-photo-wrap {
+  grid-column: span 5;
+  position: relative;
+}
+
+.hero-photo {
+  aspect-ratio: 3 / 4;
+  border-radius: var(--radius-card);
+  background: repeating-linear-gradient(45deg, #164a3a, #164a3a 12px, #123f31 12px, #123f31 24px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #d9d5c8;
+  font-size: 13px;
+  text-align: center;
+  padding: 24px;
+}
+
+.hero-photo-badge {
+  position: absolute;
+  top: 20px;
+  left: -16px;
+  background: #fff;
+  color: var(--ink);
+  border-radius: 12px;
+  padding: 10px 16px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.hero-photo-badge strong {
+  display: block;
+  font-size: 14px;
+}
+
+/* ---- 數據列：4 欄 ---- */
+.stats-bar {
+  background: var(--green-900);
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  padding: 32px 0;
+}
+
+.stats-bar .grid-12 {
+  text-align: center;
+}
+
+.stat-item {
+  grid-column: span 3;
+  color: #fff;
+}
+
+.stat-number {
+  display: block;
+  font-size: 30px;
+  font-weight: 700;
+  color: var(--lime);
+}
+
+.stat-label {
+  font-size: 13px;
+  color: #d9d5c8;
+}
+
+/* ---- 標語區 ---- */
+.tagline-copy {
+  grid-column: span 6;
+  font-size: 26px;
+  font-weight: 900;
+  line-height: 1.5;
+}
+
+.tagline-detail {
+  grid-column: span 6;
+  color: var(--ink-2);
+  line-height: 1.9;
+  align-self: center;
+}
+
+/* ---- 課程介紹：4 張卡 ---- */
+.course-grid {
+  margin-top: 32px;
+}
+
+.course-card {
+  grid-column: span 3;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.course-card-photo {
+  aspect-ratio: 4 / 3;
+  border-radius: 12px;
+  background: var(--paper-2);
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ink-3);
+  font-size: 12px;
+  text-align: center;
+}
+
+.course-card h3 {
+  font-size: 18px;
+  margin: 0;
+}
+
+.course-card .eyebrow {
+  margin-bottom: 0;
+}
+
+.course-card p {
+  color: var(--ink-2);
+  font-size: 14px;
+  line-height: 1.7;
+  margin: 0;
+  flex: 1;
+}
+
+.course-card-meta {
+  font-size: 13px;
+  color: var(--ink-3);
+}
+
+.course-card-price {
+  font-family: "Barlow Condensed", sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--green-900);
+}
+
+/* ---- 教練介紹：左照片右文字 ---- */
+.about-split {
+  align-items: center;
+}
+
+.about-photo {
+  grid-column: span 5;
+  aspect-ratio: 3 / 4;
+  border-radius: var(--radius-card);
+  background-color: #ded9c9;
+  background-image: linear-gradient(45deg, var(--paper) 25%, transparent 25%, transparent 75%, var(--paper) 75%),
+    linear-gradient(45deg, var(--paper) 25%, transparent 25%, transparent 75%, var(--paper) 75%);
+  background-size: 24px 24px;
+  background-position: 0 0, 12px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ink-3);
+  font-size: 13px;
+}
+
+.about-copy {
+  grid-column: span 7;
+}
+
+.about-copy .highlight-list {
+  margin-top: 16px;
+}
+
+/* ---- 上課流程：4 欄，上方粗線 ---- */
+.process-step {
+  grid-column: span 3;
+  border-top: 4px solid var(--green-900);
+  padding-top: 16px;
+}
+
+.process-step-number {
+  font-family: "Barlow Condensed", sans-serif;
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--green-700);
+}
+
+.process-step h3 {
+  font-size: 16px;
+  margin: 4px 0 6px;
+}
+
+.process-step p {
+  color: var(--ink-2);
+  font-size: 14px;
+  margin: 0;
+}
+
+/* ---- 預約方式：深綠圓角大卡 ---- */
+.booking-cta-card {
+  background: var(--green-900);
+  color: #fff;
+  border-radius: var(--radius-card);
+  padding: 48px;
+  text-align: center;
+}
+
+.booking-cta-card .eyebrow {
+  color: var(--lime);
+}
+
+.booking-cta-actions {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-top: 24px;
+}
+
+.booking-cta-line-id {
+  color: #d9d5c8;
+  font-size: 14px;
+  margin-top: 8px;
+}
+
+/* ---- 上課場地：2 張卡 ---- */
+.venue-card {
+  grid-column: span 6;
+  overflow: hidden;
+}
+
+.venue-card-photo {
+  aspect-ratio: 16 / 9;
+  background: var(--paper-2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ink-3);
+  font-size: 13px;
+}
+
+.venue-card-body {
+  padding: 20px;
+}
+
+.venue-card h3 {
+  font-size: 17px;
+  margin: 0 0 8px;
+}
+
+.venue-card p {
+  color: var(--ink-2);
+  font-size: 14px;
+  margin: 0 0 4px;
+}
+
+.venue-card a {
+  color: var(--green-700);
+  font-weight: 700;
+  font-size: 14px;
+}
+
+/* ---- FAQ ---- */
+.faq-item {
+  border-bottom: 1px solid var(--line);
+  padding: 16px 0;
+}
+
+.faq-item summary {
+  cursor: pointer;
+  font-weight: 700;
+  list-style: none;
+}
+
+.faq-item summary::-webkit-details-marker {
+  display: none;
+}
+
+.faq-item summary::after {
+  content: "+";
+  float: right;
+  font-size: 20px;
+  color: var(--green-700);
+}
+
+.faq-item[open] summary::after {
+  content: "－";
+}
+
+.faq-item p {
+  color: var(--ink-2);
+  margin: 12px 0 0;
+  line-height: 1.8;
+}
+
+/* ---- Footer ---- */
+.site-footer {
+  background: var(--footer);
+  color: #b9c2bc;
+  padding: 48px 0 24px;
+  font-size: 14px;
+}
+
+.footer-col h4 {
+  color: #fff;
+  font-size: 14px;
+  margin: 0 0 12px;
+}
+
+.footer-col p {
+  margin: 0 0 8px;
+  line-height: 1.8;
+}
+
+.footer-bottom {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  margin-top: 32px;
+  padding-top: 16px;
+  font-size: 12px;
+  color: #7c877f;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+/* ---- 手機版底部固定操作列 ---- */
+.mobile-action-bar {
+  display: none;
+}
+
+/* ---- 首頁響應式（<1024 平板、<768 手機） ---- */
+@media (max-width: 1023px) {
+  .hero-copy,
+  .hero-photo-wrap,
+  .tagline-copy,
+  .tagline-detail,
+  .about-photo,
+  .about-copy,
+  .process-step,
+  .venue-card,
+  .stat-item {
+    grid-column: span 12;
+  }
+
+  .course-card {
+    grid-column: span 6;
+  }
+
+  .about-photo {
+    max-width: 360px;
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 767px) {
+  .section {
+    padding: 48px 0;
+  }
+
+  .hero {
+    padding-top: 32px;
+  }
+
+  .hero .grid-12 {
+    display: flex;
+    flex-direction: column-reverse;
+  }
+
+  .hero-copy h1 {
+    font-size: 30px;
+  }
+
+  .hero-photo-wrap {
+    margin-bottom: 24px;
+  }
+
+  .stat-item {
+    grid-column: span 6;
+  }
+
+  .course-card {
+    grid-column: span 12;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .course-card-photo {
+    display: none; /* 手機版課程改直式清單：課名+一行說明+價格，不需要照片 */
+  }
+
+  .course-card > * {
+    flex: 1;
+  }
+
+  .booking-cta-card {
+    padding: 32px 20px;
+  }
+
+  /* 手機版底部固定一條操作列：LINE 詢問（外框）+ 預約體驗課（深綠實心較寬） */
+  .mobile-action-bar {
+    display: flex;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 60;
+    background: #fff;
+    border-top: 1px solid var(--line);
+    padding: 10px 12px;
+    gap: 10px;
+    padding-bottom: max(10px, env(safe-area-inset-bottom));
+  }
+
+  .mobile-action-bar .btn {
+    flex: 1;
+    padding: 12px 16px;
+  }
+
+  .mobile-action-bar .btn-primary {
+    flex: 2;
+  }
+
+  /* 底部固定列會擋住內容，頁面最下面留出對應高度的空間 */
+  body {
+    padding-bottom: 68px;
+  }
+}
+
+/* ================= 線上預約頁（book.html）四步驟專用元件 ================= */
+
+.booking-page {
+  padding: 32px 0 64px;
+}
+
+.booking-title {
+  margin-bottom: 32px;
+}
+
+.booking-layout-grid {
+  align-items: start;
+}
+
+.booking-form-col {
+  grid-column: span 8;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.booking-summary-col {
+  grid-column: span 4;
+}
+
+.booking-step {
+  padding: 24px;
+}
+
+.booking-step-title {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.booking-step-title .step-no {
+  font-family: "Barlow Condensed", sans-serif;
+  font-weight: 700;
+  color: var(--green-700);
+}
+
+.booking-step-title h2 {
+  font-size: 18px;
+  margin: 0;
+}
+
+/* ---- Step 1：課程選擇，2x2 按鈕卡 ---- */
+.course-select-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.course-select-card {
+  border: 2px solid var(--line);
+  border-radius: 14px;
+  padding: 16px;
+  background: #fff;
+  text-align: left;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.course-select-card h4 {
+  margin: 0 0 4px;
+  font-size: 15px;
+  color: var(--ink);
+}
+
+.course-select-card p {
+  margin: 0;
+  font-size: 13px;
+  color: var(--ink-3);
+}
+
+.course-select-card.selected {
+  border-color: var(--green-900);
+  box-shadow: 0 0 0 4px rgba(201, 232, 74, 0.35);
+}
+
+/* ---- Step 2：日期，一週 7 格 ---- */
+.date-week-strip {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.date-week-nav {
+  background: transparent;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  color: var(--ink);
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+}
+
+.date-week-days {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 6px;
+}
+
+.date-day-cell {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: #fff;
+  padding: 8px 2px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.date-day-cell .dow {
+  font-size: 11px;
+  color: var(--ink-3);
+}
+
+.date-day-cell .dom {
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.date-day-cell:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.date-day-cell.selected {
+  border-color: var(--green-900);
+  background: var(--green-900);
+}
+
+.date-day-cell.selected .dow,
+.date-day-cell.selected .dom {
+  color: #fff;
+}
+
+/* ---- Step 3：時段，格狀三態 ---- */
+.slot-time-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.slot-time-cell {
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: #fff;
+  padding: 10px 6px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+  text-align: center;
+}
+
+.slot-time-cell.selected {
+  border-color: var(--green-900);
+  background: var(--lime);
+  color: var(--ink);
+}
+
+.slot-time-cell.full {
+  background: var(--paper-2);
+  color: var(--ink-3);
+  cursor: not-allowed;
+  text-decoration: line-through;
+}
+
+.slot-time-hint {
+  color: var(--ink-3);
+  font-size: 13px;
+  margin: 0;
+}
+
+/* ---- Step 4：聯絡資料表單 ---- */
+.booking-step .form-row label {
+  font-size: 13px;
+  color: var(--ink-2);
+  font-weight: 500;
+}
+
+.booking-step .form-row input,
+.booking-step .form-row select,
+.booking-step .form-row textarea {
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+
+/* ---- 右側 sticky 明細卡 ---- */
+.booking-summary-card {
+  position: sticky;
+  top: 24px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.booking-summary-card h3 {
+  font-size: 16px;
+  margin: 0;
+}
+
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  color: var(--ink-2);
+  border-bottom: 1px dashed var(--line);
+  padding-bottom: 8px;
+}
+
+.summary-row .val {
+  color: var(--ink);
+  font-weight: 600;
+  text-align: right;
+}
+
+.summary-row .val.placeholder {
+  color: var(--ink-3);
+  font-weight: 400;
+}
+
+.summary-price {
+  font-family: "Barlow Condensed", sans-serif;
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--green-900);
+}
+
+.booking-success {
+  text-align: center;
+  padding: 48px 24px;
+}
+
+.booking-success .success-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--lime);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 16px;
+  font-size: 28px;
+}
+
+@media (max-width: 1023px) {
+  .booking-form-col,
+  .booking-summary-col {
+    grid-column: span 12;
+  }
+
+  .booking-summary-card {
+    position: static;
+  }
+}
+
+@media (max-width: 767px) {
+  .course-select-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .slot-time-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .booking-summary-col {
+    order: 10; /* 明細卡移到最下面 */
+  }
+
+  .booking-submit-fixed {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 60;
+    background: #fff;
+    border-top: 1px solid var(--line);
+    padding: 10px 16px;
+    padding-bottom: max(10px, env(safe-area-inset-bottom));
+  }
+
+  body.has-fixed-submit {
+    padding-bottom: 68px;
+  }
+}
+
 /* 手機版共用調整 */
 @media (max-width: 640px) {
   .page-main {
