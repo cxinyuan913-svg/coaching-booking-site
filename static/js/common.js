@@ -76,6 +76,7 @@ async function renderNav() {
 
   const links = [];
   if (user && user.is_coach) {
+    links.push(["/", "首頁"]);
     links.push(["/admin_slots.html", "開放時段管理"]);
     links.push(["/admin_requests.html", "審核申請"]);
   } else {
