@@ -49,7 +49,11 @@ class Venue(Base):
 class SessionType(Base):
     """可預約的課程時長選項（例如「60分鐘」）。reference_price 只是給學生
     預約前參考用的估價，教練核准後實際入帳金額以 coaching-record-tool
-    自己的價目表為準，不是從這裡帶過去（避免兩邊價格互相打架）。"""
+    自己的價目表為準，不是從這裡帶過去（避免兩邊價格互相打架）。
+
+    同一張表也服務首頁「課程介紹」卡片的行銷文案（description／
+    target_audience），不另外重造一套課程資料——教練後台開時段時選的
+    「課程種類」，就是首頁上顯示給學生看的那四張課程卡片。"""
 
     __tablename__ = "session_types"
 
@@ -57,6 +61,10 @@ class SessionType(Base):
     name: Mapped[str] = mapped_column(String(100), nullable=False)
     duration_minutes: Mapped[int] = mapped_column(Integer, nullable=False)
     reference_price: Mapped[float] = mapped_column(Float, nullable=False, default=0)
+    # 首頁課程卡片用：課程說明、適合對象。舊資料沒有這兩欄也沒關係
+    # （nullable），首頁渲染時空值就不顯示那一行
+    description: Mapped[str | None] = mapped_column(Text, nullable=True)
+    target_audience: Mapped[str | None] = mapped_column(String(200), nullable=True)
 
     slots: Mapped[list["AvailabilitySlot"]] = relationship(back_populates="session_type")
 
@@ -87,6 +95,10 @@ class BookingRequest(Base):
         Enum(BookingRequestStatus), nullable=False, default=BookingRequestStatus.PENDING
     )
     student_note: Mapped[str | None] = mapped_column(Text, nullable=True)
+    # 送出申請當下填的「目前程度」「想加強的地方」，是每次預約才會填的
+    # 資訊，不是帳號固定屬性，所以放在這裡而不是 User 表
+    student_level: Mapped[str | None] = mapped_column(String(50), nullable=True)
+    focus_note: Mapped[str | None] = mapped_column(Text, nullable=True)
     created_at: Mapped[datetime] = mapped_column(DateTime, nullable=False, default=datetime.now)
     decided_at: Mapped[datetime | None] = mapped_column(DateTime, nullable=True)
     # 核准後呼叫 coaching-record-tool 建立正式課程失敗時，把錯誤訊息記下來，

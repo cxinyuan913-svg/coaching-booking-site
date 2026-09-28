@@ -16,6 +16,8 @@ def _to_out(request: models.BookingRequest, *, include_user_name: bool = False) 
         id=request.id,
         status=request.status,
         student_note=request.student_note,
+        student_level=request.student_level,
+        focus_note=request.focus_note,
         created_at=request.created_at,
         decided_at=request.decided_at,
         sync_error=request.sync_error,
@@ -40,6 +42,8 @@ def create_booking(
         user_id=user.id,
         slot_id=slot.id,
         student_note=payload.student_note,
+        student_level=payload.student_level,
+        focus_note=payload.focus_note,
     )
     db.add(booking)
     db.commit()

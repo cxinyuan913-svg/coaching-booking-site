@@ -43,6 +43,8 @@ class SessionTypeCreate(BaseModel):
     name: str
     duration_minutes: int
     reference_price: float = 0
+    description: str | None = None
+    target_audience: str | None = None
 
 
 class SessionTypeOut(SessionTypeCreate):
@@ -79,6 +81,9 @@ class AvailabilitySlotOut(BaseModel):
 class BookingRequestCreate(BaseModel):
     slot_id: int
     student_note: str | None = None
+    # 送出申請當下填的「目前程度」「想加強的地方」，見 models.BookingRequest 的說明
+    student_level: str | None = None
+    focus_note: str | None = None
 
 
 class BookingRequestOut(BaseModel):
@@ -87,6 +92,8 @@ class BookingRequestOut(BaseModel):
     id: int
     status: BookingRequestStatus
     student_note: str | None
+    student_level: str | None
+    focus_note: str | None
     created_at: datetime
     decided_at: datetime | None
     sync_error: str | None
