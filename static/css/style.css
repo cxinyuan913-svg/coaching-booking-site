@@ -558,6 +558,14 @@ button:disabled {
   font-size: 13px;
   text-align: center;
   padding: 24px;
+  overflow: hidden;
+}
+
+.hero-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 
 .hero-photo-badge {
@@ -695,6 +703,14 @@ button:disabled {
   justify-content: center;
   color: var(--ink-3);
   font-size: 13px;
+  overflow: hidden;
+}
+
+.about-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 
 .about-copy {
@@ -771,6 +787,14 @@ button:disabled {
   justify-content: center;
   color: var(--ink-3);
   font-size: 13px;
+  overflow: hidden;
+}
+
+.venue-card-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 
 .venue-card-body {
