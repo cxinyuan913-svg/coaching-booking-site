@@ -817,6 +817,12 @@ button:disabled {
   font-size: 14px;
 }
 
+.venue-card-meta {
+  color: var(--ink-3);
+  font-size: 13px;
+  margin: 8px 0 0;
+}
+
 /* ---- FAQ ---- */
 .faq-item {
   border-bottom: 1px solid var(--line);
