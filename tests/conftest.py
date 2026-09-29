@@ -14,6 +14,8 @@ os.environ["DATABASE_URL"] = f"sqlite:///{os.path.join(_tmp_dir, 'test_booking.d
 os.environ["SESSION_SECRET_KEY"] = "test-session-secret-key"
 os.environ["COACH_EMAIL"] = "coach@example.com"
 os.environ["COACH_PASSWORD"] = "coach-test-password"
+# 不讀本機 .env：裡面是真實的教練工具 token 等整合設定，測試不該對外發請求
+os.environ["BOOKING_SITE_SKIP_DOTENV"] = "1"
 
 from fastapi.testclient import TestClient  # noqa: E402
 

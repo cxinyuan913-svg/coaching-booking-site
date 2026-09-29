@@ -36,11 +36,17 @@ Token 驗證，見該專案的 `app/auth.py`／`app/routers/integrations.py`）
 
 ## 環境變數
 
+本機設定寫在專案根目錄的 `.env`（不進 repo，範本見 `.env.example`），
+由 `app/__init__.py` 在啟動時載入；系統環境變數有同名設定時優先。
+測試會設 `BOOKING_SITE_SKIP_DOTENV` 跳過 `.env`。
+
 - `COACH_EMAIL`／`COACH_PASSWORD`：第一次啟動時自動建立的教練帳號
 - `SESSION_SECRET_KEY`：沒設定會自動產生並存到本機 `session_secret.txt`
 - `COACHING_TOOL_BASE_URL`／`COACHING_TOOL_API_TOKEN`：呼叫
-  coaching-record-tool 整合端點用，token 對應該專案的
-  `public_booking_api_token.txt`
+  coaching-record-tool 整合端點用。教練工具已搬到雲端，網址是
+  `https://admin.badmintonlemon.com`（結尾不加斜線）；token 對應該專案的
+  `public_booking_api_token.txt`。整合端點 `/api/integrations/*` 只用
+  Bearer Token；教練工具其他 `/api/*` 需要網頁登入，本專案不應呼叫
 
 ## 開發慣例
 
