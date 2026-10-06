@@ -48,6 +48,42 @@ def create_session_type(payload: schemas.SessionTypeCreate, db: Session = Depend
     return session_type
 
 
+@router.patch("/session_types/{session_type_id}", response_model=schemas.SessionTypeOut)
+def update_session_type(
+    session_type_id: int, payload: schemas.SessionTypeUpdate, db: Session = Depends(get_db)
+):
+    session_type = db.get(models.SessionType, session_type_id)
+    if session_type is None:
+        raise HTTPException(status_code=404, detail="課程不存在")
+    changes = payload.model_dump(exclude_unset=True)
+
+    # 時段沒有自己存時長，是即時讀課程的 duration_minutes；已經有時段在用時
+    # 改時長，會連帶改掉已開放時段跟待審申請的長度（核准時送去教練工具的
+    # 也會變），所以擋下來，要不同時長請另外新增一個課程。
+    new_duration = changes.get("duration_minutes")
+    if new_duration is not None and new_duration != session_type.duration_minutes:
+        in_use = (
+            db.query(models.AvailabilitySlot)
+            .filter(models.AvailabilitySlot.session_type_id == session_type_id)
+            .first()
+        )
+        if in_use is not None:
+            raise HTTPException(
+                status_code=409,
+                detail="這個課程已經有開放時段在用，不能改時長；要不同時長請另外新增一個課程",
+            )
+
+    # 名稱、時長、參考價是必填欄位，送 null 視為沒改；說明跟適合對象可以清空
+    for field in ("name", "duration_minutes", "reference_price"):
+        if changes.get(field, ...) is None:
+            changes.pop(field)
+    for field, value in changes.items():
+        setattr(session_type, field, value)
+    db.commit()
+    db.refresh(session_type)
+    return session_type
+
+
 # ---------- 開放時段 ----------
 
 

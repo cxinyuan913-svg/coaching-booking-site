@@ -47,6 +47,16 @@ class SessionTypeCreate(BaseModel):
     target_audience: str | None = None
 
 
+class SessionTypeUpdate(BaseModel):
+    """教練後台編輯課程：沒送的欄位維持原值（用 exclude_unset 判斷）。"""
+
+    name: str | None = None
+    duration_minutes: int | None = None
+    reference_price: float | None = None
+    description: str | None = None
+    target_audience: str | None = None
+
+
 class SessionTypeOut(SessionTypeCreate):
     model_config = ConfigDict(from_attributes=True)
 

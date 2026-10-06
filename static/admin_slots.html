@@ -31,12 +31,50 @@
     </div>
 
     <div class="section-block">
-      <h2>課程時長選項</h2>
+      <h2>課程</h2>
+      <p style="color: #666; font-size: 13px">
+        說明、適合對象、參考價會顯示在首頁的課程卡片上。已經有開放時段在用的課程不能改時長。
+      </p>
       <table>
-        <thead><tr><th>名稱</th><th>時長（分鐘）</th><th>參考價</th></tr></thead>
+        <thead><tr><th>名稱</th><th>時長（分鐘）</th><th>參考價</th><th>說明</th><th>適合對象</th><th></th></tr></thead>
         <tbody id="session-type-list"></tbody>
       </table>
-      <form id="session-type-form" style="margin-top: 10px; display: flex; gap: 8px; align-items: flex-end">
+
+      <!-- 編輯課程：按表格裡的「編輯」才展開 -->
+      <form id="session-type-edit-form" style="display: none; margin-top: 12px; padding: 12px; border: 1px solid #ddd; border-radius: 8px">
+        <h3 style="margin: 0 0 10px; font-size: 15px">編輯課程</h3>
+        <input id="st-edit-id" type="hidden" />
+        <div style="display: flex; gap: 8px; flex-wrap: wrap">
+          <div class="form-row">
+            <label for="st-edit-name">名稱</label>
+            <input id="st-edit-name" type="text" required />
+          </div>
+          <div class="form-row">
+            <label for="st-edit-duration">時長（分鐘）</label>
+            <input id="st-edit-duration" type="number" min="15" step="15" required />
+          </div>
+          <div class="form-row">
+            <label for="st-edit-price">參考價</label>
+            <input id="st-edit-price" type="number" min="0" step="1" required />
+          </div>
+        </div>
+        <div class="form-row">
+          <label for="st-edit-audience">適合對象（選填）</label>
+          <input id="st-edit-audience" type="text" placeholder="例如：想打好基本動作的初學者" />
+        </div>
+        <div class="form-row">
+          <label for="st-edit-description">說明（選填）</label>
+          <textarea id="st-edit-description" rows="3"></textarea>
+        </div>
+        <div style="display: flex; gap: 8px">
+          <button type="submit">儲存</button>
+          <button type="button" class="secondary" id="btn-st-edit-cancel">取消</button>
+        </div>
+        <p class="error-text" id="st-edit-error" style="display: none"></p>
+      </form>
+
+      <h3 style="margin: 16px 0 8px; font-size: 15px">新增課程</h3>
+      <form id="session-type-form" style="display: flex; gap: 8px; flex-wrap: wrap; align-items: flex-end">
         <div class="form-row" style="margin-bottom: 0">
           <label for="st-name">名稱</label>
           <input id="st-name" type="text" placeholder="例如：60分鐘單堂" required />
@@ -49,8 +87,17 @@
           <label for="st-price">參考價</label>
           <input id="st-price" type="number" min="0" step="1" value="0" required />
         </div>
-        <button type="submit">新增選項</button>
+        <div class="form-row" style="margin-bottom: 0">
+          <label for="st-audience">適合對象（選填）</label>
+          <input id="st-audience" type="text" />
+        </div>
+        <div class="form-row" style="margin-bottom: 0; flex-basis: 100%">
+          <label for="st-description">說明（選填）</label>
+          <textarea id="st-description" rows="2"></textarea>
+        </div>
+        <button type="submit">新增課程</button>
       </form>
+      <p class="error-text" id="st-create-error" style="display: none"></p>
     </div>
 
     <div class="section-block">

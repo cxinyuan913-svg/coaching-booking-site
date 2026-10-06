@@ -11,10 +11,26 @@ async function loadVenues() {
   select.innerHTML = venues.map((v) => `<option value="${v.id}">${v.name}</option>`).join("");
 }
 
+// 說明/適合對象是自由輸入的文字，塞進 innerHTML 前先跳脫，打了 < 之類的字元不會壞版
+function escapeHtml(text) {
+  const div = document.createElement("div");
+  div.textContent = text ?? "";
+  return div.innerHTML;
+}
+
 async function loadSessionTypes() {
   sessionTypes = await api.get("/api/admin/session_types");
   document.getElementById("session-type-list").innerHTML = sessionTypes
-    .map((s) => `<tr><td>${s.name}</td><td>${s.duration_minutes}</td><td>${s.reference_price}</td></tr>`)
+    .map(
+      (s) => `<tr>
+        <td>${escapeHtml(s.name)}</td>
+        <td>${s.duration_minutes}</td>
+        <td>${s.reference_price}</td>
+        <td style="white-space: pre-line">${escapeHtml(s.description) || "—"}</td>
+        <td>${escapeHtml(s.target_audience) || "—"}</td>
+        <td><button type="button" class="secondary" data-edit-session-type="${s.id}">編輯</button></td>
+      </tr>`
+    )
     .join("");
   const select = document.getElementById("batch-session-type");
   select.innerHTML = sessionTypes.map((s) => `<option value="${s.id}">${s.name}</option>`).join("");
@@ -54,12 +70,73 @@ document.getElementById("venue-form").addEventListener("submit", async (e) => {
 
 document.getElementById("session-type-form").addEventListener("submit", async (e) => {
   e.preventDefault();
-  await api.post("/api/admin/session_types", {
-    name: document.getElementById("st-name").value.trim(),
-    duration_minutes: parseInt(document.getElementById("st-duration").value, 10),
-    reference_price: parseFloat(document.getElementById("st-price").value),
-  });
+  const errorEl = document.getElementById("st-create-error");
+  errorEl.style.display = "none";
+  try {
+    await api.post("/api/admin/session_types", {
+      name: document.getElementById("st-name").value.trim(),
+      duration_minutes: parseInt(document.getElementById("st-duration").value, 10),
+      reference_price: parseFloat(document.getElementById("st-price").value),
+      description: document.getElementById("st-description").value.trim() || null,
+      target_audience: document.getElementById("st-audience").value.trim() || null,
+    });
+  } catch (err) {
+    errorEl.textContent = `新增失敗：${err.message}`;
+    errorEl.style.display = "";
+    return;
+  }
   document.getElementById("session-type-form").reset();
+  await loadSessionTypes();
+});
+
+// ---------- 編輯課程 ----------
+
+const editForm = document.getElementById("session-type-edit-form");
+
+function openSessionTypeEditor(id) {
+  const s = sessionTypes.find((item) => item.id === id);
+  if (!s) return;
+  document.getElementById("st-edit-id").value = s.id;
+  document.getElementById("st-edit-name").value = s.name;
+  document.getElementById("st-edit-duration").value = s.duration_minutes;
+  document.getElementById("st-edit-price").value = s.reference_price;
+  document.getElementById("st-edit-audience").value = s.target_audience || "";
+  document.getElementById("st-edit-description").value = s.description || "";
+  document.getElementById("st-edit-error").style.display = "none";
+  editForm.style.display = "";
+  editForm.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  document.getElementById("st-edit-name").focus();
+}
+
+document.getElementById("session-type-list").addEventListener("click", (e) => {
+  const btn = e.target.closest("[data-edit-session-type]");
+  if (btn) openSessionTypeEditor(parseInt(btn.dataset.editSessionType, 10));
+});
+
+document.getElementById("btn-st-edit-cancel").addEventListener("click", () => {
+  editForm.style.display = "none";
+});
+
+editForm.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const errorEl = document.getElementById("st-edit-error");
+  errorEl.style.display = "none";
+  const id = document.getElementById("st-edit-id").value;
+  try {
+    await api.patch(`/api/admin/session_types/${id}`, {
+      name: document.getElementById("st-edit-name").value.trim(),
+      duration_minutes: parseInt(document.getElementById("st-edit-duration").value, 10),
+      reference_price: parseFloat(document.getElementById("st-edit-price").value),
+      // 清空就送 null，讓首頁卡片不再顯示這一行
+      description: document.getElementById("st-edit-description").value.trim() || null,
+      target_audience: document.getElementById("st-edit-audience").value.trim() || null,
+    });
+  } catch (err) {
+    errorEl.textContent = `儲存失敗：${err.message}`;
+    errorEl.style.display = "";
+    return;
+  }
+  editForm.style.display = "none";
   await loadSessionTypes();
 });
 
