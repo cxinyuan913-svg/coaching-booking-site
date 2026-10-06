@@ -51,6 +51,12 @@ Token 驗證，見該專案的 `app/auth.py`／`app/routers/integrations.py`）
   `public_booking_api_token.txt`。整合端點 `/api/integrations/*` 只用
   Bearer Token；教練工具其他 `/api/*` 需要網頁登入，本專案不應呼叫
 
+## 部署
+
+雲端網址 https://badmintonlemon.com，跟 coaching-record-tool 同一台 VPS、
+共用那邊的 Caddy，但獨立容器與資料庫。步驟與更新流程見
+`spec/cloud_deployment.md`。
+
 ## 開發慣例
 
 - 每完成一個小功能就 commit 一次，commit 訊息用繁體中文描述做了什麼

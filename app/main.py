@@ -40,7 +40,13 @@ def _load_or_create_session_secret() -> str:
     return secret
 
 
-app.add_middleware(SessionMiddleware, secret_key=_load_or_create_session_secret())
+# 雲端（HTTPS）設 SESSION_HTTPS_ONLY=1，登入 cookie 只走 HTTPS、不會在明碼
+# 連線被帶出去；本機開發是 http://127.0.0.1，不能開，否則會登入不了
+app.add_middleware(
+    SessionMiddleware,
+    secret_key=_load_or_create_session_secret(),
+    https_only=os.environ.get("SESSION_HTTPS_ONLY") == "1",
+)
 
 app.include_router(auth.router)
 app.include_router(slots.router)

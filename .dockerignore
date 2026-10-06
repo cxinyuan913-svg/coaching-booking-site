@@ -1,0 +1,11 @@
+# 不要把本機的機密設定、資料庫、虛擬環境打包進映像檔
+.env
+*.db
+session_secret.txt
+venv/
+.git/
+.pytest_cache/
+__pycache__/
+tests/
+data/
+backups/

@@ -1,0 +1,24 @@
+# 雲端 VPS 用的部署設定（見 spec/cloud_deployment.md）。
+#
+# 這台 VPS 的 80/443 已經由 coaching-record-tool 那套 compose 裡的 Caddy
+# 佔用，同一台主機只能有一個 Caddy 負責 HTTPS，所以這裡不開對外 port，
+# 而是接上兩邊共用的 Docker 網路 badmintonlemon_web，由那邊的 Caddy 依網域
+# 把 badmintonlemon.com 轉進來。兩個網站仍是獨立容器、獨立資料庫。
+services:
+  coaching-booking-site:
+    build: .
+    container_name: coaching-booking-site
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      - SESSION_HTTPS_ONLY=1
+    volumes:
+      # 整個資料夾掛進去（不是單一檔案），主機上要先 chown 1000:1000 data
+      - ./data:/app/data
+    networks:
+      - web
+
+networks:
+  web:
+    name: badmintonlemon_web
+    external: true

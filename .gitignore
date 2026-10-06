@@ -9,3 +9,7 @@ __pycache__/
 .idea/
 .pytest_cache/
 session_secret.txt
+
+# 雲端部署：資料庫資料夾與備份
+data/
+backups/
