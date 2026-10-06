@@ -26,6 +26,15 @@
 | 資料庫 | `/root/coaching-booking-site/data/booking.db` |
 | 機密設定 | `/root/coaching-booking-site/.env`（不進版控，欄位見 `.env.example`） |
 
+## 目前實際部署狀態（2026-10-06 上線）
+
+- 照下面「第一次上線」步驟完成，`/api/health` 內外部都正常、HTTPS 憑證已取得
+- 備份：cron `10 19 * * *`（台灣時間 03:10），已手動跑過一次確認可產生備份檔；
+  主機上的備份檔擁有者顯示為 `linuxuser`，就是容器內 uid 1000 的 appuser，正常
+- 教練工具的 `offsite_backup.sh`（每日上傳 Cloudflare R2）目前**只備份教練工具
+  自己的資料庫**，這個網站的備份還只在 VPS 本機
+- 雲端資料庫是全新的，本機開發用的課程／時段資料沒有帶上去
+
 ---
 
 ## 第一次上線
