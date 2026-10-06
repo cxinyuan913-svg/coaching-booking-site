@@ -11,13 +11,6 @@ async function loadVenues() {
   select.innerHTML = venues.map((v) => `<option value="${v.id}">${v.name}</option>`).join("");
 }
 
-// 說明/適合對象是自由輸入的文字，塞進 innerHTML 前先跳脫，打了 < 之類的字元不會壞版
-function escapeHtml(text) {
-  const div = document.createElement("div");
-  div.textContent = text ?? "";
-  return div.innerHTML;
-}
-
 async function loadSessionTypes() {
   sessionTypes = await api.get("/api/admin/session_types");
   document.getElementById("session-type-list").innerHTML = sessionTypes

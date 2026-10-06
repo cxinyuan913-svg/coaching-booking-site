@@ -1314,3 +1314,194 @@ button:disabled {
     max-width: 100%;
   }
 }
+
+/* ================= 多頁面改版：子頁頁首、首頁入口卡片、最新消息 ================= */
+
+/* 子頁頁首（關於教練／課程／場地／消息／FAQ）：深綠底、左邊大標題 */
+.page-hero {
+  background: var(--green-900);
+  color: #fff;
+  padding: 64px 0 56px;
+}
+
+.page-hero h1 {
+  font-size: 44px;
+  font-weight: 900;
+  margin: 0 0 12px;
+  color: #fff;
+}
+
+.page-hero p {
+  color: #d9d5c8;
+  max-width: 640px;
+  line-height: 1.8;
+  margin: 0;
+}
+
+/* 首頁「探索」入口卡片：連到各子頁 */
+.entry-grid {
+  margin-top: 32px;
+}
+
+.entry-card {
+  grid-column: span 4;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 28px;
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.entry-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 28px rgba(15, 59, 46, 0.12);
+  border-color: var(--green-700);
+}
+
+.entry-card .eyebrow {
+  margin: 0;
+}
+
+.entry-card h3 {
+  font-size: 20px;
+  margin: 0;
+}
+
+.entry-card p {
+  color: var(--ink-2);
+  font-size: 14px;
+  line-height: 1.7;
+  margin: 0;
+  flex: 1;
+}
+
+.entry-card-more {
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--green-700);
+}
+
+/* 最新消息卡片：首頁預覽與 /news.html 共用 */
+.section-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.section-head h2 {
+  margin: 0;
+}
+
+.news-grid {
+  margin-top: 32px;
+}
+
+.news-card {
+  grid-column: span 4;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.news-card-top {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.news-tag {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: var(--radius-pill);
+  background: var(--green-900);
+  color: var(--lime);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.news-tag.pinned {
+  background: var(--lime);
+  color: var(--ink);
+}
+
+.news-date {
+  font-family: "Barlow Condensed", sans-serif;
+  font-size: 15px;
+  color: var(--ink-3);
+}
+
+.news-card h3 {
+  font-size: 18px;
+  margin: 0;
+  line-height: 1.5;
+}
+
+.news-card p {
+  color: var(--ink-2);
+  font-size: 14px;
+  line-height: 1.8;
+  margin: 0;
+  white-space: pre-line;
+}
+
+.news-card a.news-link {
+  color: var(--green-700);
+  font-weight: 700;
+  font-size: 14px;
+}
+
+/* 消息頁：分類篩選膠囊 */
+.news-filter {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 8px;
+}
+
+.news-filter button {
+  background: var(--card);
+  color: var(--ink);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-pill);
+  padding: 6px 16px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.news-filter button.active {
+  background: var(--green-900);
+  border-color: var(--green-900);
+  color: #fff;
+}
+
+.footer-links a {
+  color: inherit;
+}
+
+@media (max-width: 1023px) {
+  .entry-card,
+  .news-card {
+    grid-column: span 6;
+  }
+}
+
+@media (max-width: 767px) {
+  .page-hero {
+    padding: 40px 0 36px;
+  }
+
+  .page-hero h1 {
+    font-size: 30px;
+  }
+
+  .entry-card,
+  .news-card {
+    grid-column: span 12;
+  }
+}

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>最新消息 - Raymond 羽球教室</title>
+  <meta name="description" content="Raymond 羽球教室最新消息：開課資訊、賽事成績、學員成果。" />
+  <link rel="stylesheet" href="/static/css/style.css" />
+</head>
+<body>
+  <nav class="topnav" id="topnav"></nav>
+
+  <main>
+    <section class="page-hero">
+      <div class="container">
+        <span class="eyebrow">News</span>
+        <h1>最新消息</h1>
+        <p>開課資訊、比賽成績、學員進步紀錄，都會第一時間公布在這裡。</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="news-filter" id="news-filter">
+          <button type="button" class="active" data-category="all">全部</button>
+          <button type="button" data-category="announcement">公告</button>
+          <button type="button" data-category="class">開課資訊</button>
+          <button type="button" data-category="match">賽事成績</button>
+          <button type="button" data-category="student">學員成果</button>
+        </div>
+        <div class="grid-12 news-grid" id="news-list">
+          <p style="color: var(--ink-3)">消息載入中…</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer id="site-footer"></footer>
+
+  <script src="/static/js/common.js"></script>
+  <script src="/static/js/news.js"></script>
+</body>
+</html>

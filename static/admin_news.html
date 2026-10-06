@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>最新消息管理 - 教練預約網站</title>
+  <link rel="stylesheet" href="/static/css/style.css" />
+</head>
+<body>
+  <nav class="topnav" id="topnav"></nav>
+  <main class="page-main">
+    <h1>最新消息管理</h1>
+    <p style="color: #666; font-size: 13px">
+      已發布的消息會出現在首頁與「最新消息」頁，置頂的排最前面。取消勾選「發布」就是存成草稿／下架，訪客看不到。
+    </p>
+
+    <form id="news-form" class="section-block" style="padding: 16px; border: 1px solid #ddd; border-radius: 8px">
+      <h2 id="news-form-title" style="margin-top: 0">發布新消息</h2>
+      <input id="news-id" type="hidden" />
+      <div style="display: flex; gap: 8px; flex-wrap: wrap">
+        <div class="form-row" style="flex: 2; min-width: 240px">
+          <label for="news-title">標題</label>
+          <input id="news-title" type="text" maxlength="100" required />
+        </div>
+        <div class="form-row">
+          <label for="news-category">分類</label>
+          <select id="news-category">
+            <option value="announcement">公告</option>
+            <option value="class">開課資訊</option>
+            <option value="match">賽事成績</option>
+            <option value="student">學員成果</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <label for="news-date">顯示日期</label>
+          <input id="news-date" type="date" />
+        </div>
+      </div>
+      <div class="form-row">
+        <label for="news-body">內文（選填）</label>
+        <textarea id="news-body" rows="4"></textarea>
+      </div>
+      <div class="form-row">
+        <label for="news-link">連結（選填，例如報名表單、IG 貼文）</label>
+        <input id="news-link" type="url" placeholder="https://" />
+      </div>
+      <div style="display: flex; gap: 16px; align-items: center; margin-bottom: 12px">
+        <label><input id="news-published" type="checkbox" checked /> 發布</label>
+        <label><input id="news-pinned" type="checkbox" /> 置頂</label>
+      </div>
+      <div style="display: flex; gap: 8px">
+        <button type="submit" id="news-submit">發布</button>
+        <button type="button" class="secondary" id="news-cancel" style="display: none">取消編輯</button>
+      </div>
+      <p class="error-text" id="news-error" style="display: none"></p>
+    </form>
+
+    <div class="section-block">
+      <h2>所有消息</h2>
+      <table>
+        <thead>
+          <tr><th>日期</th><th>分類</th><th>標題</th><th>狀態</th><th></th></tr>
+        </thead>
+        <tbody id="news-admin-list">
+          <tr><td colspan="5">載入中…</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </main>
+
+  <script src="/static/js/common.js"></script>
+  <script src="/static/js/admin_news.js"></script>
+</body>
+</html>
