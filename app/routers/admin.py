@@ -1,8 +1,6 @@
 """教練後台：管理場地／課程時長／開放時段、審核預約申請、發布最新消息。全部端點都需要
 `is_coach=True`（見 app/auth.py 的 require_coach）。
 """
-from datetime import date
-
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 
@@ -12,6 +10,7 @@ from app.booking_tool_client import BookingToolError, create_lesson
 from app.database import get_db
 from app.models import BookingRequestStatus
 from app.routers.bookings import _to_out as booking_to_out
+from app.timeutil import now_taipei, today_taipei
 
 router = APIRouter(prefix="/api/admin", tags=["admin"], dependencies=[Depends(require_coach)])
 
@@ -103,7 +102,7 @@ def list_all_news(db: Session = Depends(get_db)):
 def create_news(payload: schemas.NewsCreate, db: Session = Depends(get_db)):
     data = payload.model_dump()
     if data["published_on"] is None:
-        data["published_on"] = date.today()
+        data["published_on"] = today_taipei()
     news = models.News(**data)
     db.add(news)
     db.commit()
@@ -209,8 +208,6 @@ def approve_booking(booking_id: int, db: Session = Depends(get_db)):
     """核准申請：呼叫教練工具建立正式課程成功後，才把這筆標記已核准、
     時段標記已訂走；呼叫失敗的話狀態留在 pending、把錯誤記到 sync_error
     讓教練看得到，之後可以再按一次重試，不會卡在不上不下的中間態。"""
-    from datetime import datetime
-
     booking = db.get(models.BookingRequest, booking_id)
     if booking is None:
         raise HTTPException(status_code=404, detail="申請不存在")
@@ -235,7 +232,7 @@ def approve_booking(booking_id: int, db: Session = Depends(get_db)):
         raise HTTPException(status_code=502, detail=str(exc)) from exc
 
     booking.status = BookingRequestStatus.APPROVED
-    booking.decided_at = datetime.now()
+    booking.decided_at = now_taipei()
     booking.sync_error = None
     slot.is_booked = True
 
@@ -252,7 +249,7 @@ def approve_booking(booking_id: int, db: Session = Depends(get_db)):
     )
     for other in other_pending:
         other.status = BookingRequestStatus.REJECTED
-        other.decided_at = datetime.now()
+        other.decided_at = now_taipei()
 
     db.commit()
     db.refresh(booking)
@@ -261,8 +258,6 @@ def approve_booking(booking_id: int, db: Session = Depends(get_db)):
 
 @router.post("/bookings/{booking_id}/reject", response_model=schemas.BookingRequestOut)
 def reject_booking(booking_id: int, db: Session = Depends(get_db)):
-    from datetime import datetime
-
     booking = db.get(models.BookingRequest, booking_id)
     if booking is None:
         raise HTTPException(status_code=404, detail="申請不存在")
@@ -270,7 +265,7 @@ def reject_booking(booking_id: int, db: Session = Depends(get_db)):
         raise HTTPException(status_code=400, detail="這筆申請已經處理過了")
 
     booking.status = BookingRequestStatus.REJECTED
-    booking.decided_at = datetime.now()
+    booking.decided_at = now_taipei()
     db.commit()
     db.refresh(booking)
     return booking_to_out(booking, include_user_name=True)

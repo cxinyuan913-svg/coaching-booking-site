@@ -9,12 +9,13 @@ from starlette.middleware.sessions import SessionMiddleware
 from starlette.responses import Response
 
 from app import models  # noqa: F401  匯入以註冊 ORM models 到 Base.metadata
-from app.database import Base, SessionLocal, engine
+from app.database import Base, SessionLocal, engine, ensure_schema_migrations
 from app.routers import admin, auth, bookings, courses, news, slots
 from app.seed import seed_coach_account
 
-# 五張表一次建齊
+# 建立還不存在的表，再替既有的表補上新版本加的欄位
 Base.metadata.create_all(bind=engine)
+ensure_schema_migrations()
 
 with SessionLocal() as db:
     seed_coach_account(db)

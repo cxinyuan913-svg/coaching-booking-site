@@ -10,6 +10,7 @@ from sqlalchemy import Boolean, Date, DateTime, Enum, Float, ForeignKey, Integer
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.database import Base
+from app.timeutil import now_taipei, today_taipei
 
 
 class NewsCategory(str, enum.Enum):
@@ -36,7 +37,7 @@ class User(Base):
     # 教練自己的帳號設 True，其他公開註冊的學生帳號一律 False；
     # 後台頁面（管理時段／審核申請）靠這個欄位擋，不是另外一套權限系統
     is_coach: Mapped[bool] = mapped_column(Boolean, nullable=False, default=False)
-    created_at: Mapped[datetime] = mapped_column(DateTime, nullable=False, default=datetime.now)
+    created_at: Mapped[datetime] = mapped_column(DateTime, nullable=False, default=now_taipei)
 
     booking_requests: Mapped[list["BookingRequest"]] = relationship(back_populates="user")
 
@@ -107,7 +108,7 @@ class BookingRequest(Base):
     # 資訊，不是帳號固定屬性，所以放在這裡而不是 User 表
     student_level: Mapped[str | None] = mapped_column(String(50), nullable=True)
     focus_note: Mapped[str | None] = mapped_column(Text, nullable=True)
-    created_at: Mapped[datetime] = mapped_column(DateTime, nullable=False, default=datetime.now)
+    created_at: Mapped[datetime] = mapped_column(DateTime, nullable=False, default=now_taipei)
     decided_at: Mapped[datetime | None] = mapped_column(DateTime, nullable=True)
     # 核准後呼叫 coaching-record-tool 建立正式課程失敗時，把錯誤訊息記下來，
     # 讓教練在後台看得到「這筆為什麼卡住」，不用去翻 server log
@@ -135,5 +136,5 @@ class News(Base):
     is_pinned: Mapped[bool] = mapped_column(Boolean, nullable=False, default=False)
     is_published: Mapped[bool] = mapped_column(Boolean, nullable=False, default=True)
     # 顯示在消息上的日期，教練可以自己指定（例如比賽當天），預設發布當天
-    published_on: Mapped[date] = mapped_column(Date, nullable=False, default=date.today)
-    created_at: Mapped[datetime] = mapped_column(DateTime, nullable=False, default=datetime.now)
+    published_on: Mapped[date] = mapped_column(Date, nullable=False, default=today_taipei)
+    created_at: Mapped[datetime] = mapped_column(DateTime, nullable=False, default=now_taipei)

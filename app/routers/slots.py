@@ -1,11 +1,11 @@
 """公開瀏覽可預約時段（不用登入就能看，送出申請才需要登入）。"""
-from datetime import date as date_type
 
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 
 from app import models, schemas
 from app.database import get_db
+from app.timeutil import today_taipei
 
 router = APIRouter(prefix="/api/slots", tags=["slots"])
 
@@ -33,7 +33,7 @@ def list_open_slots(db: Session = Depends(get_db)):
         db.query(models.AvailabilitySlot)
         .filter(
             models.AvailabilitySlot.is_booked.is_(False),
-            models.AvailabilitySlot.date >= date_type.today(),
+            models.AvailabilitySlot.date >= today_taipei(),
         )
         .order_by(models.AvailabilitySlot.date, models.AvailabilitySlot.start_time)
         .all()
