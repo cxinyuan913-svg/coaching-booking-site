@@ -1,9 +1,9 @@
 """所有 API 的請求/回應格式（Pydantic）。"""
 from datetime import date, datetime, time
 
-from pydantic import BaseModel, ConfigDict, EmailStr, Field
+from pydantic import BaseModel, ConfigDict, EmailStr, Field, field_validator
 
-from app.models import BookingRequestStatus
+from app.models import BookingRequestStatus, NewsCategory
 
 
 class UserRegister(BaseModel):
@@ -109,3 +109,61 @@ class BookingRequestOut(BaseModel):
     sync_error: str | None
     slot: AvailabilitySlotOut
     user_name: str | None = None  # 教練審核清單才需要看到是誰申請的
+
+
+def _check_link_url(value: str | None) -> str | None:
+    """消息連結會直接放進頁面的 href，只收 http(s)，擋掉 javascript: 之類的；
+    空字串視為沒填。"""
+    if value is None or not value.strip():
+        return None
+    value = value.strip()
+    if not value.lower().startswith(("http://", "https://")):
+        raise ValueError("連結必須是 http:// 或 https:// 開頭")
+    return value
+
+
+class NewsCreate(BaseModel):
+    title: str = Field(min_length=1, max_length=100)
+    body: str | None = None
+    category: NewsCategory = NewsCategory.ANNOUNCEMENT
+    link_url: str | None = Field(default=None, max_length=500)
+    is_pinned: bool = False
+    is_published: bool = True
+    # 沒填就用發布當天
+    published_on: date | None = None
+
+    @field_validator("link_url")
+    @classmethod
+    def _validate_link_url(cls, value: str | None) -> str | None:
+        return _check_link_url(value)
+
+
+class NewsUpdate(BaseModel):
+    """沒送的欄位維持原值（exclude_unset）；title/category/is_pinned/
+    is_published/published_on 送 null 視為沒改，body/link_url 可以清空。"""
+
+    title: str | None = Field(default=None, min_length=1, max_length=100)
+    body: str | None = None
+    category: NewsCategory | None = None
+    link_url: str | None = Field(default=None, max_length=500)
+    is_pinned: bool | None = None
+    is_published: bool | None = None
+    published_on: date | None = None
+
+    @field_validator("link_url")
+    @classmethod
+    def _validate_link_url(cls, value: str | None) -> str | None:
+        return _check_link_url(value)
+
+
+class NewsOut(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
+    id: int
+    title: str
+    body: str | None
+    category: NewsCategory
+    link_url: str | None
+    is_pinned: bool
+    is_published: bool
+    published_on: date

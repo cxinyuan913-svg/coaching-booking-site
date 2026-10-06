@@ -1,6 +1,7 @@
-"""SQLAlchemy ORM models：五張表一次建齊（比照 coaching-record-tool 的慣例，
-不分批建立）。這是全新、獨立的資料庫，跟 coaching-record-tool 的六張表完全
-不共用、不同步（見專案根目錄 CLAUDE.md 的架構決策）。
+"""SQLAlchemy ORM models：預約核心五張表一次建齊（比照 coaching-record-tool
+的慣例，不分批建立），加上首頁改版時新增的 news（最新消息）。這是全新、
+獨立的資料庫，跟 coaching-record-tool 的六張表完全不共用、不同步（見專案
+根目錄 CLAUDE.md 的架構決策）。
 """
 import enum
 from datetime import date, datetime, time
@@ -9,6 +10,13 @@ from sqlalchemy import Boolean, Date, DateTime, Enum, Float, ForeignKey, Integer
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.database import Base
+
+
+class NewsCategory(str, enum.Enum):
+    ANNOUNCEMENT = "announcement"  # 公告
+    CLASS = "class"  # 開課資訊
+    MATCH = "match"  # 賽事成績
+    STUDENT = "student"  # 學員成果
 
 
 class BookingRequestStatus(str, enum.Enum):
@@ -107,3 +115,25 @@ class BookingRequest(Base):
 
     user: Mapped["User"] = relationship(back_populates="booking_requests")
     slot: Mapped["AvailabilitySlot"] = relationship(back_populates="booking_requests")
+
+
+class News(Base):
+    """最新消息：首頁跑馬燈、消息輪播與 /news.html 的內容來源，教練在後台
+    發布。is_published=False 是草稿或已下架，公開 API 一律看不到；
+    is_pinned 的排在最前面（跑馬燈跟輪播都會優先顯示）。"""
+
+    __tablename__ = "news"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    title: Mapped[str] = mapped_column(String(100), nullable=False)
+    body: Mapped[str | None] = mapped_column(Text, nullable=True)
+    category: Mapped[NewsCategory] = mapped_column(
+        Enum(NewsCategory), nullable=False, default=NewsCategory.ANNOUNCEMENT
+    )
+    # 選填的外部連結（例如報名表單、比賽報導、IG 貼文）
+    link_url: Mapped[str | None] = mapped_column(String(500), nullable=True)
+    is_pinned: Mapped[bool] = mapped_column(Boolean, nullable=False, default=False)
+    is_published: Mapped[bool] = mapped_column(Boolean, nullable=False, default=True)
+    # 顯示在消息上的日期，教練可以自己指定（例如比賽當天），預設發布當天
+    published_on: Mapped[date] = mapped_column(Date, nullable=False, default=date.today)
+    created_at: Mapped[datetime] = mapped_column(DateTime, nullable=False, default=datetime.now)

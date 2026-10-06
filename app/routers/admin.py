@@ -1,6 +1,8 @@
-"""教練後台：管理場地／課程時長／開放時段、審核預約申請。全部端點都需要
+"""教練後台：管理場地／課程時長／開放時段、審核預約申請、發布最新消息。全部端點都需要
 `is_coach=True`（見 app/auth.py 的 require_coach）。
 """
+from datetime import date
+
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 
@@ -82,6 +84,57 @@ def update_session_type(
     db.commit()
     db.refresh(session_type)
     return session_type
+
+
+# ---------- 最新消息 ----------
+
+
+@router.get("/news", response_model=list[schemas.NewsOut])
+def list_all_news(db: Session = Depends(get_db)):
+    """後台看得到全部（含草稿/已下架），排序跟公開頁一致。"""
+    return (
+        db.query(models.News)
+        .order_by(models.News.is_pinned.desc(), models.News.published_on.desc(), models.News.id.desc())
+        .all()
+    )
+
+
+@router.post("/news", response_model=schemas.NewsOut, status_code=201)
+def create_news(payload: schemas.NewsCreate, db: Session = Depends(get_db)):
+    data = payload.model_dump()
+    if data["published_on"] is None:
+        data["published_on"] = date.today()
+    news = models.News(**data)
+    db.add(news)
+    db.commit()
+    db.refresh(news)
+    return news
+
+
+@router.patch("/news/{news_id}", response_model=schemas.NewsOut)
+def update_news(news_id: int, payload: schemas.NewsUpdate, db: Session = Depends(get_db)):
+    news = db.get(models.News, news_id)
+    if news is None:
+        raise HTTPException(status_code=404, detail="消息不存在")
+    changes = payload.model_dump(exclude_unset=True)
+    # 必填欄位送 null 視為沒改；內文跟連結可以清空
+    for field in ("title", "category", "is_pinned", "is_published", "published_on"):
+        if changes.get(field, ...) is None:
+            changes.pop(field)
+    for field, value in changes.items():
+        setattr(news, field, value)
+    db.commit()
+    db.refresh(news)
+    return news
+
+
+@router.delete("/news/{news_id}", status_code=204)
+def delete_news(news_id: int, db: Session = Depends(get_db)):
+    news = db.get(models.News, news_id)
+    if news is None:
+        raise HTTPException(status_code=404, detail="消息不存在")
+    db.delete(news)
+    db.commit()
 
 
 # ---------- 開放時段 ----------

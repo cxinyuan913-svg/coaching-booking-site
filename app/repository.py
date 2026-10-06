@@ -15,3 +15,15 @@ from app import models
 def list_courses(db: Session) -> list[models.SessionType]:
     """首頁課程介紹卡片用：列出所有課程種類，依建立順序排序。"""
     return db.query(models.SessionType).order_by(models.SessionType.id).all()
+
+
+def list_published_news(db: Session, limit: int | None = None) -> list[models.News]:
+    """公開的最新消息：只列已發布的，置頂優先，其餘依日期新到舊。"""
+    query = (
+        db.query(models.News)
+        .filter(models.News.is_published.is_(True))
+        .order_by(models.News.is_pinned.desc(), models.News.published_on.desc(), models.News.id.desc())
+    )
+    if limit is not None:
+        query = query.limit(limit)
+    return query.all()

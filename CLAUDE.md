@@ -34,6 +34,9 @@ Token 驗證，見該專案的 `app/auth.py`／`app/routers/integrations.py`）
 （預約申請，pending/approved/rejected）。跟 coaching-record-tool 一樣
 一次建齊，不分批建立。
 
+首頁改版（2026-10）時另外加了第六張 `news`（最新消息，教練在後台發布，
+首頁跑馬燈／輪播與 `/news.html` 用），經使用者同意新增。
+
 ## 環境變數
 
 本機設定寫在專案根目錄的 `.env`（不進 repo，範本見 `.env.example`），

@@ -10,7 +10,7 @@ from starlette.responses import Response
 
 from app import models  # noqa: F401  匯入以註冊 ORM models 到 Base.metadata
 from app.database import Base, SessionLocal, engine
-from app.routers import admin, auth, bookings, courses, slots
+from app.routers import admin, auth, bookings, courses, news, slots
 from app.seed import seed_coach_account
 
 # 五張表一次建齊
@@ -47,6 +47,7 @@ app.include_router(slots.router)
 app.include_router(bookings.router)
 app.include_router(admin.router)
 app.include_router(courses.router)
+app.include_router(news.router)
 
 
 @app.get("/api/health")
