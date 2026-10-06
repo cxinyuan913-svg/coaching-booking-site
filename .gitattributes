@@ -1,0 +1,4 @@
+# 給 Linux 主機執行的檔案一律 LF，避免 Windows 換行字元讓 sh 腳本壞掉
+*.sh text eol=lf
+Dockerfile text eol=lf
+*.yml text eol=lf
