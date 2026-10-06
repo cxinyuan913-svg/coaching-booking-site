@@ -199,12 +199,26 @@ function renderNewsCard(news) {
   `;
 }
 
+// 對外聯絡資訊：實際內容還沒定案，空字串的項目整個不顯示（不要把
+// 【LINE ID】這類佔位文字放到公開網站上）。之後確定內容只要改這裡。
+const SITE_CONTACT = {
+  lineId: "", // 例如 @raymondbadminton
+  lineUrl: "", // 加好友連結，例如 https://lin.ee/xxxx
+  email: "",
+  serviceHours: "", // 例如 週一至週五 18:00–22:00
+};
+
 // 行銷頁共用的「預約 CTA 大卡 + 頁尾 + 手機底部操作列」，各頁只要放一個
 // <footer id="site-footer"></footer>，不用每頁複製同一大段 HTML。
 // 加上 data-cta="off" 可以不顯示 CTA 大卡（例如預約頁本身）。
 function renderSiteFooter() {
   const footer = document.getElementById("site-footer");
   if (!footer) return;
+
+  const { lineId, lineUrl, email, serviceHours } = SITE_CONTACT;
+  const lineButton = (cls) =>
+    lineUrl ? `<a href="${lineUrl}" class="btn ${cls}" target="_blank" rel="noopener">加 LINE 詢問</a>` : "";
+  const contactLines = [lineId && `<p>LINE：${lineId}</p>`, email && `<p>Email：${email}</p>`].filter(Boolean);
 
   if (footer.dataset.cta !== "off") {
     footer.insertAdjacentHTML(
@@ -215,13 +229,13 @@ function renderSiteFooter() {
             <span class="eyebrow">Booking</span>
             <h2>準備好開始了嗎？</h2>
             <p style="color: #d9d5c8; max-width: 480px; margin: 0 auto">
-              線上查看開放時段直接預約，或加 LINE 先跟教練聊聊你的狀況。
+              ${lineUrl ? "線上查看開放時段直接預約，或加 LINE 先跟教練聊聊你的狀況。" : "線上查看開放時段，直接預約你方便的時間。"}
             </p>
             <div class="booking-cta-actions">
               <a href="/book.html" class="btn btn-primary">線上預約時段</a>
-              <a href="#" class="btn btn-outline">加 LINE 詢問</a>
+              ${lineButton("btn-outline")}
             </div>
-            <p class="booking-cta-line-id">LINE ID：【LINE ID】</p>
+            ${lineId ? `<p class="booking-cta-line-id">LINE ID：${lineId}</p>` : ""}
           </div>
         </div>
       </section>`
@@ -235,11 +249,14 @@ function renderSiteFooter() {
         <h4>Raymond 羽球教室</h4>
         <p>前臺灣土地銀行男子雙打選手，陪你打出屬於你的球風。</p>
       </div>
-      <div class="footer-col" style="grid-column: span 4">
-        <h4>聯絡方式</h4>
-        <p>LINE：【LINE ID】</p>
-        <p>Email：【Email】</p>
-      </div>
+      ${
+        contactLines.length
+          ? `<div class="footer-col" style="grid-column: span 4">
+              <h4>聯絡方式</h4>
+              ${contactLines.join("")}
+            </div>`
+          : ""
+      }
       <div class="footer-col footer-links" style="grid-column: span 4">
         <h4>快速連結</h4>
         <p><a href="/about.html">關於教練</a>・<a href="/courses.html">課程介紹</a>・<a href="/venues.html">上課場地</a></p>
@@ -248,14 +265,14 @@ function renderSiteFooter() {
     </div>
     <div class="container footer-bottom">
       <span>© 2026 Raymond 羽球教室</span>
-      <span>【服務時間，例如：週一至週五 18:00–22:00】</span>
+      ${serviceHours ? `<span>服務時間：${serviceHours}</span>` : ""}
     </div>
   `;
 
   footer.insertAdjacentHTML(
     "afterend",
     `<div class="mobile-action-bar">
-      <a href="#" class="btn btn-outline-dark">LINE 詢問</a>
+      ${lineUrl ? `<a href="${lineUrl}" class="btn btn-outline-dark" target="_blank" rel="noopener">LINE 詢問</a>` : ""}
       <a href="/book.html" class="btn btn-primary">預約體驗課</a>
     </div>`
   );

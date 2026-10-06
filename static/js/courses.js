@@ -3,7 +3,6 @@ function renderCourseCard(course) {
   const priceText = course.reference_price > 0 ? `NT$ ${Math.round(course.reference_price)}` : "";
   return `
     <div class="card course-card">
-      <div class="course-card-photo"><span>【課程照片】</span></div>
       <span class="eyebrow">${course.duration_minutes} 分鐘</span>
       <h3>${escapeHtml(course.name)}</h3>
       ${course.target_audience ? `<p class="course-card-meta">適合：${escapeHtml(course.target_audience)}</p>` : ""}
